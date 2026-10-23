@@ -1,30 +1,33 @@
-"""
-db.py — MySQL helpers for Zikrnoor.
-
-load_dotenv() runs at import time so ANY script that does `import db`
-gets the .env vars loaded automatically. This removes the class of bug
-where `python app.py` works but `python some_other_script.py` fails
-with "using password: NO".
-"""
+"""MySQL helpers for Zikrnoor; supports local .env and Railway MySQL variables."""
 
 import os
 import mysql.connector
 from mysql.connector import Error
 from dotenv import load_dotenv
 
-# Load .env once, at import. Safe to call multiple times.
 load_dotenv()
 
 
+def _env(primary, railway_name, default=None):
+    """Prefer the app's DB_* setting, then Railway's native MySQL variable."""
+    return os.environ.get(primary) or os.environ.get(railway_name) or default
+
+
 def get_connection():
+    host = _env("DB_HOST", "MYSQLHOST", "127.0.0.1")
+    port = int(_env("DB_PORT", "MYSQLPORT", "3306"))
+    user = _env("DB_USER", "MYSQLUSER", "root")
+    password = _env("DB_PASSWORD", "MYSQLPASSWORD", "")
+    database = _env("DB_NAME", "MYSQLDATABASE", "zikrnoor")
     return mysql.connector.connect(
-        host=os.environ.get("DB_HOST", "127.0.0.1"),
-        port=int(os.environ.get("DB_PORT", "3306")),
-        user=os.environ.get("DB_USER", "root"),
-        password=os.environ.get("DB_PASSWORD", ""),
-        database=os.environ.get("DB_NAME", "zikrnoor"),
+        host=host,
+        port=port,
+        user=user,
+        password=password,
+        database=database,
         charset="utf8mb4",
         autocommit=False,
+        connection_timeout=10,
     )
 
 
