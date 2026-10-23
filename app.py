@@ -15,7 +15,10 @@ import db
 load_dotenv()
 
 app = Flask(__name__, template_folder=None, static_folder=None)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-change-me")
+# Configure SECRET_KEY in the hosting dashboard for stable, secure sessions.
+# Random fallback avoids shipping a known production secret; sessions reset on restart
+# until a persistent SECRET_KEY is configured.
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY") or os.urandom(32)
 
 logging.basicConfig(level=logging.INFO,
                     format="%(asctime)s %(levelname)s %(name)s: %(message)s")
@@ -54,7 +57,7 @@ def health():
         return jsonify(status="error", database="unexpected_response"), 503
     except Error as exc:
         log.exception("Health check DB failure")
-        return jsonify(status="error", database="unreachable", detail=str(exc)), 503
+        return jsonify(status="error", database="unreachable", detail="Database connection failed. Check the DB environment variables in your hosting settings."), 503
 
 
 # ===== QURAN =====
