@@ -1,4 +1,4 @@
-"""MySQL helpers for Zikrnoor; supports local .env and Railway MySQL variables."""
+"""MySQL helpers for Zikrnoor with SSL support for managed MySQL providers."""
 
 import os
 import mysql.connector
@@ -8,17 +8,29 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def _env(primary, railway_name, default=None):
-    """Prefer the app's DB_* setting, then Railway's native MySQL variable."""
-    return os.environ.get(primary) or os.environ.get(railway_name) or default
+def _env(primary, *fallbacks, default=None):
+    """Return the first configured non-empty environment variable."""
+    for name in (primary, *fallbacks):
+        value = os.environ.get(name)
+        if value:
+            return value
+    return default
 
 
 def get_connection():
-    host = _env("DB_HOST", "MYSQLHOST", "127.0.0.1")
-    port = int(_env("DB_PORT", "MYSQLPORT", "3306"))
-    user = _env("DB_USER", "MYSQLUSER", "root")
-    password = _env("DB_PASSWORD", "MYSQLPASSWORD", "")
-    database = _env("DB_NAME", "MYSQLDATABASE", "zikrnoor")
+    host = _env("DB_HOST", "MYSQLHOST", "MYSQL_HOST", default="127.0.0.1")
+    port = int(_env("DB_PORT", "MYSQLPORT", "MYSQL_PORT", default="3306"))
+    user = _env("DB_USER", "MYSQLUSER", "MYSQL_USER", default="root")
+    password = _env("DB_PASSWORD", "MYSQLPASSWORD", "MYSQL_PASSWORD", default="")
+    database = _env("DB_NAME", "MYSQLDATABASE", "MYSQL_DATABASE", default="zikrnoor")
+
+    # Set DB_SSL_CA to a certificate file path to verify managed MySQL TLS.
+    # For Aiven, commit the CA certificate as aiven-ca.pem and set DB_SSL_CA=aiven-ca.pem.
+    ssl_ca = _env("DB_SSL_CA", "MYSQL_SSL_CA")
+    ssl_options = {}
+    if ssl_ca:
+        ssl_options.update(ssl_ca=ssl_ca, ssl_verify_cert=True, ssl_verify_identity=True)
+
     return mysql.connector.connect(
         host=host,
         port=port,
@@ -28,6 +40,7 @@ def get_connection():
         charset="utf8mb4",
         autocommit=False,
         connection_timeout=10,
+        **ssl_options,
     )
 
 
