@@ -323,6 +323,14 @@
             </div>
         </section>
 
+        <aside class="dashboard-prayer-card" aria-label="Prayer times">
+            <span class="dashboard-prayer-kicker">☾ NEXT PRAYER</span><h2>Asr</h2>
+            <div class="dashboard-prayer-countdown">02:34:17</div>
+            <div class="dashboard-prayer-times"><div>Fajr<strong>5:18 AM</strong></div><div>Dhuhr<strong>12:32 PM</strong></div><div class="next">Asr<strong>3:28 PM</strong></div><div>Maghrib<strong>6:14 PM</strong></div><div>Isha<strong>7:32 PM</strong></div></div>
+            <a class="dashboard-prayer-link" href="#routine">View daily routine →</a><p class="dashboard-demo-note">Sample prayer times · UI demo</p>
+        </aside>
+        </div>
+
         <!-- ============================================================
              DAILY REMINDER
              ============================================================ -->
@@ -419,6 +427,18 @@
 
             </div>
         </section>
+
+        <section class="dashboard-progress"><div class="dashboard-progress-heading"><div><span class="eyebrow">YOUR DAILY PRACTICE</span><h2>Today’s Progress</h2></div><span class="dashboard-today-pill">● Today</span></div>
+        <div class="dashboard-progress-grid">
+        <a href="#quran" class="dashboard-progress-item"><span class="dashboard-progress-icon">📖</span><div class="dashboard-progress-track"><i style="width:60%"></i></div><strong>3/5</strong><span>Quran ayahs</span></a>
+        <a href="#adhkar" class="dashboard-progress-item"><span class="dashboard-progress-icon">🤲</span><div class="dashboard-progress-track gold-track"><i style="width:42%"></i></div><strong>5/12</strong><span>Adhkar completed</span></a>
+        <a href="#tasbeeh-tool" class="dashboard-progress-item"><span class="dashboard-progress-icon">📿</span><div class="dashboard-progress-track"><i style="width:40%"></i></div><strong>120/300</strong><span>Tasbeeh count</span></a>
+        <a href="#routine" class="dashboard-progress-item"><span class="dashboard-progress-icon">✓</span><div class="dashboard-progress-track purple-track"><i style="width:50%"></i></div><strong>3/6</strong><span>Routine tasks</span></a></div>
+        <div class="dashboard-mini-cards">
+        <a href="#quran" class="dashboard-mini-card"><span>📖</span><div><strong>Continue Reading</strong><p>Surah Al-Baqarah · Ayah 255</p><small>Resume Quran reading →</small></div></a>
+        <a href="#tasbeeh-tool" class="dashboard-mini-card"><span>📿</span><div><strong>Last Tasbeeh Session</strong><p>SubhanAllah · 100 / 100</p><small>Open Tasbeeh →</small></div></a>
+        <a href="#adhkar" class="dashboard-mini-card"><span>🤲</span><div><strong>Daily Adhkar</strong><p>Morning and evening remembrance</p><small>Continue Adhkar →</small></div></a>
+        </div></section>
 
         <!-- ============================================================
              QURAN
@@ -684,5 +704,8 @@
 
     <!-- Main application script — MUST stay as the last script -->
     <script src="./script.js"></script>
+<script>
+(function(){const d=document.getElementById("dashboard-date");if(d)d.textContent=new Intl.DateTimeFormat("en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).format(new Date());const s=document.getElementById("dashboard-global-search");if(s)s.addEventListener("keydown",e=>{if(e.key!=="Enter"||!s.value.trim())return;const q=s.value.trim().toLowerCase();const m=[["quran","quran"],["ayah","quran"],["surah","quran"],["adhkar","adhkar"],["tasbeeh","tasbeeh-tool"],["hadith","hadith-library"],["routine","routine"],["bookmark","bookmarks"]].find(x=>q.includes(x[0]));const target=document.getElementById(m?m[1]:"quran");if(target)target.scrollIntoView({behavior:"smooth"});});})();
+</script>
 </body>
 </html>
