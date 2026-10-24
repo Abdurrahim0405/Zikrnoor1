@@ -264,7 +264,7 @@
         <a href="#tasbeeh-tool">◉ &nbsp; Tasbeeh</a>
         <a href="#hadith-library">▤ &nbsp; Hadith</a>
         <a href="#dashboard-prayer-card">◷ &nbsp; Prayer Times</a>
-        <a href="#dashboard-prayer-card">⌖ &nbsp; Qibla</a>
+        <a href="#qibla">⌖ &nbsp; Qibla</a>
         <a href="#dashboard-islamic-date">▦ &nbsp; Islamic Calendar</a>
         <a href="#routine">☑ &nbsp; My Routine</a>
         <a href="#bookmarks">♧ &nbsp; Bookmarks</a>
@@ -473,6 +473,32 @@
         </section>
 
 
+
+        <!-- QIBLA COMPASS -->
+        <section class="app-section qibla-view" id="qibla">
+            <a class="reader-back-link" href="#home">← Back to Home</a>
+            <span class="eyebrow">FIND YOUR DIRECTION</span>
+            <h2>Qibla Compass</h2>
+            <p>Find the direction of the Kaaba from your current location.</p>
+            <div class="qibla-layout">
+                <div class="qibla-compass-card">
+                    <div class="qibla-compass" id="qibla-compass" aria-label="Qibla direction compass">
+                        <span class="qibla-north">N</span><span class="qibla-east">E</span><span class="qibla-south">S</span><span class="qibla-west">W</span>
+                        <div class="qibla-needle" id="qibla-needle"><span>▲</span></div>
+                        <div class="qibla-center">🕋</div>
+                    </div>
+                    <div class="qibla-bearing"><strong id="qibla-bearing">--°</strong><span>Qibla bearing from true north</span></div>
+                </div>
+                <div class="qibla-info-card">
+                    <span class="dashboard-prayer-kicker">YOUR LOCATION</span>
+                    <h3 id="qibla-location">Finding your location…</h3>
+                    <p id="qibla-status" aria-live="polite">Requesting location permission to calculate the Qibla direction.</p>
+                    <button type="button" class="qibla-action" id="qibla-locate">Detect my location</button>
+                    <button type="button" class="qibla-action secondary" id="qibla-calibrate">Enable compass</button>
+                    <small>For best results, allow location access and move your phone away from magnets and metal. Compass support depends on your device and browser.</small>
+                </div>
+            </div>
+        </section>
 
         <!-- ============================================================
              QURAN
@@ -811,6 +837,63 @@
   if(btn)btn.addEventListener("click",detectLocation);
  });
  detectLocation();
+ const qiblaSection=document.getElementById("qibla");
+ if(qiblaSection){
+  const locationLabel=document.getElementById("qibla-location"), qStatus=document.getElementById("qibla-status"), needle=document.getElementById("qibla-needle"), bearingLabel=document.getElementById("qibla-bearing");
+  let qiblaBearing=null, compassHeading=0, hasCompass=false;
+  const kaaba={lat:21.4225,lon:39.8262};
+  function updateNeedle(){
+   if(qiblaBearing===null)return;
+   const relative=((qiblaBearing-compassHeading)%360+360)%360;
+   if(needle)needle.style.transform="rotate("+relative+"deg)";
+   if(bearingLabel)bearingLabel.textContent=Math.round(qiblaBearing)+"°";
+  }
+  function calculateBearing(lat,lon){
+   const rad=Math.PI/180, p1=lat*rad, p2=kaaba.lat*rad, dLon=(kaaba.lon-lon)*rad;
+   const y=Math.sin(dLon)*Math.cos(p2);
+   const x=Math.cos(p1)*Math.sin(p2)-Math.sin(p1)*Math.cos(p2)*Math.cos(dLon);
+   return (Math.atan2(y,x)/rad+360)%360;
+  }
+  function setPosition(lat,lon,place){
+   qiblaBearing=calculateBearing(lat,lon);
+   if(locationLabel)locationLabel.textContent=place||("Lat "+lat.toFixed(3)+", Lon "+lon.toFixed(3));
+   if(qStatus)qStatus.textContent="Qibla is "+Math.round(qiblaBearing)+"° clockwise from true north. Rotate the compass when device heading is available.";
+   updateNeedle();
+  }
+  function detectQiblaLocation(){
+   if(qStatus)qStatus.textContent="Requesting your location…";
+   if(!navigator.geolocation){if(qStatus)qStatus.textContent="Geolocation is not supported by this browser.";return;}
+   navigator.geolocation.getCurrentPosition(pos=>{
+    setPosition(pos.coords.latitude,pos.coords.longitude,"Your current location");
+   },()=>{
+    if(qStatus)qStatus.textContent="Location access was denied or unavailable. Allow location permission in browser settings and try again.";
+    if(locationLabel)locationLabel.textContent="Location unavailable";
+   },{enableHighAccuracy:true,timeout:15000,maximumAge:300000});
+  }
+  function onOrientation(event){
+   let heading=null;
+   if(typeof event.webkitCompassHeading==="number")heading=event.webkitCompassHeading;
+   else if(typeof event.alpha==="number")heading=(360-event.alpha)%360;
+   if(heading!==null){compassHeading=heading;hasCompass=true;updateNeedle();if(qStatus&&qiblaBearing!==null)qStatus.textContent="Compass active. Turn until the needle points to the top marker."; }
+  }
+  function enableCompass(){
+   if(typeof DeviceOrientationEvent==="undefined"){if(qStatus)qStatus.textContent="This device/browser does not provide a compass sensor. Bearing is still shown relative to true north.";return;}
+   if(typeof DeviceOrientationEvent.requestPermission==="function"){
+    DeviceOrientationEvent.requestPermission().then(permission=>{
+     if(permission==="granted"){window.addEventListener("deviceorientation",onOrientation,true);if(qStatus)qStatus.textContent="Compass permission granted. Move your phone in a figure-eight if heading seems inaccurate.";}
+     else if(qStatus)qStatus.textContent="Compass permission was not granted. You can still use the bearing shown.";
+    }).catch(()=>{if(qStatus)qStatus.textContent="Could not enable compass. Your Qibla bearing is still available.";});
+   }else{
+    window.addEventListener("deviceorientationabsolute",onOrientation,true);
+    window.addEventListener("deviceorientation",onOrientation,true);
+    if(qStatus)qStatus.textContent="Compass requested. If direction does not move, your device may not expose a compass sensor.";
+   }
+  }
+  const locateButton=document.getElementById("qibla-locate"), compassButton=document.getElementById("qibla-calibrate");
+  if(locateButton)locateButton.addEventListener("click",detectQiblaLocation);
+  if(compassButton)compassButton.addEventListener("click",enableCompass);
+  detectQiblaLocation();
+ }
  const search=document.getElementById("dashboard-global-search");
  if(search)search.addEventListener("keydown",e=>{
   if(e.key!=="Enter"||!search.value.trim())return;
