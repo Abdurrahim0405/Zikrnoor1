@@ -109,11 +109,14 @@ def nearby_masjids():
     errors = []
     with ThreadPoolExecutor(max_workers=2) as pool:
         futures = [pool.submit(fetch_endpoint, endpoint) for endpoint in endpoints]
-        for future in as_completed(futures, timeout=13):
-            try:
-                return jsonify(future.result()), 200
-            except Exception as exc:
-                errors.append(type(exc).__name__)
+        try:
+            for future in as_completed(futures, timeout=13):
+                try:
+                    return jsonify(future.result()), 200
+                except Exception as exc:
+                    errors.append(type(exc).__name__)
+        except TimeoutError:
+            errors.append("timeout")
     log.warning("Nearby masjid lookup failed for both map-data endpoints: %s",
                 ", ".join(errors) or "timeout")
     return jsonify(error="map_data_unavailable",
