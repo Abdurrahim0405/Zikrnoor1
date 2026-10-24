@@ -2089,3 +2089,34 @@ body[data-view="nearby-masjid"] #nearby-masjid { display:block; max-width:1080px
  .nearby-masjid-card { padding:18px; }
  .nearby-masjid-card p { min-height:0; }
 }
+
+
+/* In-page Nearby Masjid results */
+.nearby-masjid-tools { display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:24px 0 22px;padding:14px 16px;border:1px solid #285b48;border-radius:14px;background:#071f18; }
+.nearby-masjid-tools label { color:var(--muted);font-size:13px;font-weight:600; }
+.nearby-masjid-tools select { min-width:150px;padding:10px 12px;border:1px solid #315947;border-radius:9px;background:#0b2b22;color:var(--text);font:inherit; }
+.nearby-masjid-tools .masjid-action { margin-left:auto; }
+.nearby-masjid-results-heading { display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:0 0 8px; }
+.nearby-masjid-results-heading h3 { margin:6px 0 0;font:26px Georgia,serif;color:var(--text); }
+.masjid-result-count { flex:0 0 auto;padding:6px 10px;border:1px solid #315947;border-radius:999px;color:#a8d0b7;font-size:12px; }
+.masjid-results { display:grid;gap:10px;margin-top:14px; }
+.masjid-result-card { display:flex;align-items:center;gap:15px;min-width:0;padding:16px;border:1px solid #28513f;border-radius:14px;background:linear-gradient(110deg,#0a291f,#061c16); }
+.masjid-result-number { display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border:1px solid #54745c;border-radius:12px;color:var(--gold);font:16px Georgia,serif; }
+.masjid-result-main { flex:1;min-width:0; }
+.masjid-result-main h4 { margin:0 0 5px;color:var(--text);font:20px Georgia,serif;overflow-wrap:anywhere; }
+.masjid-result-main p { margin:0 0 8px;color:var(--muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere; }
+.masjid-distance { color:#e8c36f;font-size:12px;font-weight:700; }
+.masjid-directions-button { flex:0 0 auto; }
+.masjid-loading,.masjid-empty { display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:22px;border:1px dashed #315947;border-radius:14px;color:var(--muted);font-size:13px;line-height:1.6; }
+.masjid-empty strong { color:var(--text);font-size:15px; }
+@media(max-width:600px) {
+ .nearby-masjid-tools { align-items:stretch; }
+ .nearby-masjid-tools label { flex:1 1 100%; }
+ .nearby-masjid-tools select,.nearby-masjid-tools .masjid-action { width:100%;margin-left:0; }
+ .nearby-masjid-results-heading { align-items:flex-start;flex-direction:column; }
+ .masjid-result-card { align-items:flex-start;flex-wrap:wrap;gap:12px;padding:14px; }
+ .masjid-result-number { flex-basis:34px;width:34px;height:34px; }
+ .masjid-result-main { flex:1 1 calc(100% - 50px); }
+ .masjid-result-main h4 { font-size:18px; }
+ .masjid-directions-button { width:100%; }
+}
