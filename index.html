@@ -853,6 +853,27 @@
     <!-- Main application script — MUST stay as the last script -->
     <script src="./script.js"></script>
 <script>
+/* Shared location preference: explicit user-selected city takes precedence over approximate IP geolocation. */
+window.ZikrnoorLocation = {
+ getSaved(){ try { return JSON.parse(localStorage.getItem("zikrnoor-location") || "null"); } catch(e) { return null; } },
+ async setCity(city, country="India"){
+  city=(city||"").trim(); if(!city) return null;
+  const response=await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q="+encodeURIComponent(city+", "+country));
+  if(!response.ok) throw new Error("Could not find that city");
+  const rows=await response.json(); if(!rows.length) throw new Error("City not found");
+  const place={city:city,country:country,lat:Number(rows[0].lat),lon:Number(rows[0].lon),source:"manual"};
+  localStorage.setItem("zikrnoor-location",JSON.stringify(place));
+  window.dispatchEvent(new CustomEvent("zikrnoor-location-changed",{detail:place}));
+  return place;
+ },
+ async getSavedCoordinates(){
+  const saved=this.getSaved(); if(saved && Number.isFinite(saved.lat) && Number.isFinite(saved.lon)) return saved;
+  if(saved && saved.city) return await this.setCity(saved.city,saved.country||"India");
+  return null;
+ }
+};
+</script>
+<script>
 (function(){
  const dateNode=document.getElementById("dashboard-date");
  if(dateNode) dateNode.textContent=new Intl.DateTimeFormat("en-IN",{weekday:"short",day:"numeric",month:"short"}).format(new Date());
@@ -912,11 +933,24 @@
    finally{locating=false;}
   },async ()=>{try{await lookupByIP();}finally{locating=false;}},{timeout:10000,maximumAge:300000});
  }
- ["dashboard-choose-city","dashboard-location-button","dashboard-use-location"].forEach(id=>{
-  const btn=document.getElementById(id);
-  if(btn)btn.addEventListener("click",detectLocation);
- });
- detectLocation();
+ async function chooseCity(){
+  const current=window.ZikrnoorLocation.getSaved();
+  const city=window.prompt("Enter your city for prayer times, Qibla and nearby masjids:",current&&current.city||"");
+  if(city===null||!city.trim())return;
+  try{
+   const place=await window.ZikrnoorLocation.setCity(city.trim(),"India");
+   await loadPrayerTimes(place.city,place.country);
+  }catch(e){if(locStatus)locStatus.textContent="City not found. Please try another spelling.";}
+ }
+ const chooseBtn=document.getElementById("dashboard-choose-city");
+ if(chooseBtn)chooseBtn.addEventListener("click",chooseCity);
+ const locationBtn=document.getElementById("dashboard-location-button");
+ if(locationBtn)locationBtn.addEventListener("click",chooseCity);
+ const useLocationBtn=document.getElementById("dashboard-use-location");
+ if(useLocationBtn)useLocationBtn.addEventListener("click",detectLocation);
+ window.addEventListener("zikrnoor-location-changed",e=>{if(e.detail)loadPrayerTimes(e.detail.city,e.detail.country);});
+ const savedLocation=window.ZikrnoorLocation.getSaved();
+ if(savedLocation&&savedLocation.city)loadPrayerTimes(savedLocation.city,savedLocation.country||"India");else detectLocation();
  const qiblaSection=document.getElementById("qibla");
  if(qiblaSection){
   const locationLabel=document.getElementById("qibla-location"), qStatus=document.getElementById("qibla-status"), needle=document.getElementById("qibla-needle"), bearingLabel=document.getElementById("qibla-bearing");
@@ -941,6 +975,8 @@
    updateNeedle();
   }
   async function detectQiblaLocation(){
+   const saved=await window.ZikrnoorLocation.getSavedCoordinates().catch(()=>null);
+   if(saved){setPosition(saved.lat,saved.lon,saved.city+", "+(saved.country||"India"));if(qStatus)qStatus.textContent="Using your selected city. Set your city from the location control to update all sections.";return;}
    if(qStatus)qStatus.textContent="Detecting your location automatically…";
    if(locationLabel)locationLabel.textContent="Finding your city…";
    if(!navigator.geolocation){if(qStatus)qStatus.textContent="Precise location is unavailable in this browser. Trying approximate location…";await fallbackQiblaLocation();return;}
@@ -1086,6 +1122,13 @@
    }
   }
   async function detectMasjidLocation(){
+   const saved=await window.ZikrnoorLocation.getSavedCoordinates().catch(()=>null);
+   if(saved){
+    masjidCoordinates={lat:saved.lat,lon:saved.lon};setMapsLinks(saved.lat,saved.lon);
+    if(locationNode)locationNode.textContent=saved.city+", "+(saved.country||"India");
+    if(statusNode)statusNode.textContent="Using your selected city for nearby masjid search.";
+    await loadNearbyMasjids(true);return;
+   }
    if(locationNode)locationNode.textContent="Finding your location…";
    if(statusNode)statusNode.textContent="Requesting location permission.";
    if(listStatus)listStatus.textContent="Waiting for location…";
