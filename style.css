@@ -1976,3 +1976,89 @@ body[data-view="qibla"] #qibla { display:block; max-width:1050px; margin:0 auto 
 .qibla-bearing { display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center }.qibla-bearing strong{font:34px Georgia,serif;color:var(--gold)}.qibla-bearing span{font-size:12px;color:var(--muted)}
 .qibla-info-card h3 { font:26px Georgia,serif;margin:12px 0;color:var(--text) }.qibla-info-card p,.qibla-info-card small{color:var(--muted);font-size:13px;line-height:1.7}.qibla-action{display:block;width:100%;margin:12px 0 0;padding:12px;border:0;border-radius:10px;background:linear-gradient(100deg,#d5a24e,#f2cf83);color:#17261c;font-weight:700;cursor:pointer}.qibla-action.secondary{border:1px solid #315947;background:#0b3429;color:var(--text)}.qibla-info-card small{display:block;margin-top:16px}
 @media(max-width:650px){.qibla-layout{grid-template-columns:1fr}.qibla-compass{width:min(75vw,300px)}body[data-view="qibla"] #qibla{padding:18px 14px}}
+
+
+/* Responsive polish: laptop, tablet and mobile */
+html { scroll-behavior:smooth; }
+body { overflow-x:hidden; }
+.container { min-width:0; }
+.dashboard-topbar > *, .dashboard-hero-grid > *, .dashboard-main-grid > *,
+.dashboard-inspiration-grid > *, .contact-footer > *, .site-footer > * { min-width:0; }
+.dashboard-search input { width:100%; }
+.dashboard-quick-actions, .dashboard-main-grid, .dashboard-inspiration-grid,
+.dashboard-progress-content, .qibla-layout { min-width:0; }
+img, svg, video, canvas { max-width:100%; }
+.app-section, .dashboard-panel, .dashboard-action-card, .dashboard-prayer-card { min-width:0; overflow-wrap:anywhere; }
+
+/* Sidebar consumes 232px, so adapt content before viewport-wide breakpoints do. */
+@media (max-width:1350px) {
+  .dashboard-hero-grid { grid-template-columns:minmax(0,1.1fr) minmax(270px,.9fr); }
+  .dashboard-hero-grid .welcome { padding:24px; }
+  .dashboard-hero-grid .welcome h1 { font-size:clamp(31px,3vw,42px); }
+  .dashboard-quick-actions { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .dashboard-main-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .dashboard-inspiration-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .dashboard-inspiration-grid .dashboard-calendar-panel { grid-column:span 2; }
+  .contact-footer { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .contact-footer-love { border-left:0; padding-left:0; }
+  .site-footer { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:14px 22px; }
+  .site-footer > * { max-width:100%; }
+  .site-footer .footer-nav { display:flex; flex-wrap:wrap; justify-content:center; gap:10px 16px; }
+}
+@media (max-width:1000px) {
+  .dashboard-hero-grid { grid-template-columns:minmax(0,1fr); }
+  .dashboard-main-grid { grid-template-columns:minmax(0,1fr); }
+  .dashboard-inspiration-grid { grid-template-columns:minmax(0,1fr); }
+  .dashboard-inspiration-grid .dashboard-calendar-panel { grid-column:auto; }
+  .dashboard-topbar { flex-wrap:wrap; }
+  .dashboard-search { flex:1 1 100%; }
+  .dashboard-location { flex:1 1 auto; }
+  .dashboard-date { margin-left:auto; }
+  .contact-footer { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+  .qibla-layout { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+}
+@media (max-width:760px) {
+  .site-header { width:100%; }
+  .navbar { position:sticky; top:0; z-index:150; width:100%; max-width:100%; }
+  .navbar a { flex:0 0 auto; }
+  .container { width:100%; margin:0; padding:14px 12px 28px; }
+  .dashboard-topbar { gap:8px; }
+  .dashboard-search { flex-basis:100%; }
+  .dashboard-location { min-width:0; }
+  .dashboard-date { margin-left:auto; }
+  .dashboard-hero-grid { grid-template-columns:minmax(0,1fr); gap:10px; }
+  .dashboard-hero-grid .welcome { padding:22px 18px; }
+  .dashboard-hero-grid .welcome h1 { font-size:clamp(30px,8vw,40px); }
+  .dashboard-prayer-card { padding:17px 14px; }
+  .dashboard-quick-actions { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  .dashboard-action-card { min-width:0; padding:12px 10px; }
+  .dashboard-main-grid { grid-template-columns:minmax(0,1fr); gap:10px; }
+  .dashboard-panel { padding:16px; }
+  .dashboard-progress-content { grid-template-columns:minmax(0,1fr); justify-items:center; }
+  .dashboard-checklist { width:100%; }
+  .dashboard-inspiration-grid { grid-template-columns:minmax(0,1fr); }
+  .dashboard-inspiration-grid .dashboard-calendar-panel { grid-column:auto; }
+  .contact-footer { grid-template-columns:minmax(0,1fr); gap:14px; padding:20px 14px; }
+  .contact-footer-love { border-left:0; border-top:1px solid #28513f; padding:14px 0 0; }
+  .site-footer, footer.site-footer { margin-left:0; display:flex; flex-wrap:wrap; gap:12px; padding:20px 14px; }
+  .site-footer .footer-nav { width:100%; display:flex; flex-wrap:wrap; justify-content:flex-start; gap:10px 14px; }
+  .site-footer .footer-meta { display:flex; flex-wrap:wrap; gap:8px; }
+  body:not([data-view="home"]) .container { min-height:calc(100vh - 190px); }
+  body[data-view="quran"] #quran, body[data-view="qibla"] #qibla { padding:18px 14px; }
+  .qibla-layout { grid-template-columns:minmax(0,1fr); }
+  .qibla-compass-card,.qibla-info-card { padding:18px; }
+}
+@media (max-width:420px) {
+  .site-header { padding:14px 14px 8px; }
+  .site-header .brand { font-size:27px; }
+  .dashboard-quick-actions { grid-template-columns:minmax(0,1fr); }
+  .dashboard-action-card { display:flex; align-items:center; }
+  .dashboard-date { padding:8px; }
+  .dashboard-location { padding:8px; }
+  .dashboard-date strong,.dashboard-location strong { font-size:11px; }
+  .dashboard-prayer-times { grid-template-columns:repeat(5,minmax(0,1fr)); gap:2px; }
+  .dashboard-prayer-times div,.dashboard-prayer-times strong { font-size:9px; }
+  .dashboard-progress-heading { align-items:flex-start; gap:8px; flex-wrap:wrap; }
+  .contact-footer-link { font-size:12px; }
+  .qibla-compass { width:min(76vw,290px); }
+}
