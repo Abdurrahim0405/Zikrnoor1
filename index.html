@@ -1046,27 +1046,25 @@
   async function loadNearbyMasjids(force=false){
    if(!masjidCoordinates)return;
    if(searchInProgress){pendingSearch=true;return;}
-   const radius=Number(radiusSelect&&radiusSelect.value||3000),key=masjidCoordinates.lat.toFixed(4)+","+masjidCoordinates.lon.toFixed(4)+":"+radius;
+   const radius=Number(radiusSelect&&radiusSelect.value||3000);
+   const key=masjidCoordinates.lat.toFixed(4)+","+masjidCoordinates.lon.toFixed(4)+":"+radius;
    if(!force&&key===lastSearchKey)return;
    searchInProgress=true;lastSearchKey=key;
    if(listStatus)listStatus.textContent="Searching OpenStreetMap for nearby masjids…";
    if(countNode)countNode.textContent="Searching…";
    if(resultsNode)resultsNode.innerHTML='<div class="masjid-loading">Finding masjids near you…</div>';
    const lat=masjidCoordinates.lat,lon=masjidCoordinates.lon;
-   const query='[out:json][timeout:25];(nwr(around:'+radius+','+lat+','+lon+')["amenity"="place_of_worship"]["religion"~"muslim",i];nwr(around:'+radius+','+lat+','+lon+')["building"="mosque"];);out center tags;';
    try{
-    const endpoints=["https://overpass.kumi.systems/api/interpreter","https://overpass-api.de/api/interpreter"];
-    const controllers=endpoints.map(()=>new AbortController());
-    const requests=endpoints.map((endpoint,index)=>fetch(endpoint+"?data="+encodeURIComponent(query),{headers:{"Accept":"application/json"},signal:AbortSignal.any([controllers[index].signal,AbortSignal.timeout(8000)])}).then(response=>{if(!response.ok)throw new Error("Map data service returned "+response.status);return response.json();}));
-    let data;
-    try{data=await Promise.any(requests);}finally{controllers.forEach(controller=>controller.abort());}
+    const response=await fetch("/api/nearby-masjids?lat="+encodeURIComponent(lat)+"&lon="+encodeURIComponent(lon)+"&radius="+encodeURIComponent(radius),{headers:{"Accept":"application/json"},signal:AbortSignal.timeout(15000)});
+    if(!response.ok)throw new Error("Nearby map service returned "+response.status);
+    const data=await response.json();
     renderMasjids(Array.isArray(data.elements)?data.elements:[]);
     if(listStatus)listStatus.textContent="Showing the closest mapped masjids within "+(radius/1000)+" km.";
    }catch(error){
     lastSearchKey="";
     if(countNode)countNode.textContent="Unavailable";
     if(resultsNode)resultsNode.innerHTML='<div class="masjid-empty"><strong>Could not load the masjid list right now.</strong><span>The map-data service may be busy. Please try Refresh list or use Google Maps.</span><a class="masjid-action secondary" href="'+mapsSearch+encodeURIComponent("mosque near "+lat+","+lon)+'" target="_blank" rel="noopener noreferrer">Open Google Maps ↗</a></div>';
-    if(listStatus)listStatus.textContent="Unable to reach the map-data service. Your location is available; try again shortly.";
+    if(listStatus)listStatus.textContent="Map data is temporarily unavailable. Your location is ready; please retry.";
    }finally{searchInProgress=false;if(pendingSearch){pendingSearch=false;loadNearbyMasjids(true);}}
   }
   async function masjidIpFallback(){

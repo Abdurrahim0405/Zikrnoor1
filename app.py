@@ -60,6 +60,68 @@ def health():
         return jsonify(status="error", database="unreachable", detail="Database connection failed. Check the DB environment variables in your hosting settings."), 503
 
 
+
+
+# ===== NEARBY MASJIDS =====
+@app.get("/api/nearby-masjids")
+def nearby_masjids():
+    """Proxy the public OpenStreetMap Overpass API to avoid browser CORS issues."""
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    from urllib.parse import urlencode
+    from urllib.request import Request, urlopen
+    import json
+    import math
+
+    try:
+        lat = float(request.args.get("lat", ""))
+        lon = float(request.args.get("lon", ""))
+        radius = int(request.args.get("radius", "3000"))
+    except (TypeError, ValueError):
+        return jsonify(error="invalid_parameters",
+                       detail="Valid latitude, longitude and radius are required."), 400
+    if not (math.isfinite(lat) and math.isfinite(lon) and -90 <= lat <= 90
+            and -180 <= lon <= 180 and radius in (1000, 3000, 5000, 10000)):
+        return jsonify(error="invalid_parameters",
+                       detail="Coordinates or search radius are outside allowed values."), 400
+
+    query = ('[out:json][timeout:18];'
+             '(nwr(around:%d,%.6f,%.6f)["amenity"="place_of_worship"]["religion"~"muslim",i];'
+             'nwr(around:%d,%.6f,%.6f)["building"="mosque"];);out center tags;'
+             % (radius, lat, lon, radius, lat, lon))
+    endpoints = (
+        "https://overpass.kumi.systems/api/interpreter",
+        "https://overpass-api.de/api/interpreter",
+    )
+
+    def fetch_endpoint(endpoint):
+        body = urlencode({"data": query}).encode("utf-8")
+        req = Request(endpoint, data=body, headers={
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+            "User-Agent": "Zikrnoor/1.0 (nearby masjid search)"
+        }, method="POST")
+        with urlopen(req, timeout=12) as response:
+            data = json.loads(response.read().decode("utf-8"))
+        if not isinstance(data, dict) or not isinstance(data.get("elements"), list):
+            raise ValueError("Unexpected map-data response")
+        return data
+
+    errors = []
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        futures = [pool.submit(fetch_endpoint, endpoint) for endpoint in endpoints]
+        try:
+            for future in as_completed(futures, timeout=13):
+                try:
+                    return jsonify(future.result()), 200
+                except Exception as exc:
+                    errors.append(type(exc).__name__)
+        except TimeoutError:
+            errors.append("timeout")
+    log.warning("Nearby masjid lookup failed for both map-data endpoints: %s",
+                ", ".join(errors) or "timeout")
+    return jsonify(error="map_data_unavailable",
+                   detail="Nearby map data is temporarily unavailable. Please retry."), 503
+
 # ===== QURAN =====
 
 @app.get("/api/surahs")
