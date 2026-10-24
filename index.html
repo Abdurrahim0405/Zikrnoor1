@@ -285,6 +285,27 @@
                 <span class="hero-orb hero-orb-2"></span>
                 <span class="hero-orb hero-orb-3"></span>
             </div>
+            <svg class="hero-mosque-art" viewBox="0 0 680 260" aria-hidden="true" focusable="false">
+                <defs><linearGradient id="mosqueGlow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6bc68" stop-opacity=".72"/><stop offset="1" stop-color="#d4a24e" stop-opacity=".08"/></linearGradient><linearGradient id="mosqueWall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c59b51" stop-opacity=".48"/><stop offset="1" stop-color="#061c14" stop-opacity=".95"/></linearGradient></defs>
+                <circle cx="420" cy="122" r="115" fill="#d5a650" opacity=".06"/>
+                <path d="M0 240 Q80 200 160 228 T330 220 T500 230 T680 210 V260 H0Z" fill="#04150f"/>
+                <g fill="url(#mosqueWall)" stroke="#d4ae61" stroke-opacity=".65" stroke-width="1.2">
+                  <path d="M235 238 V145 Q265 105 295 145 V238Z"/><path d="M205 238 V166 H325 V238Z"/>
+                  <path d="M320 238 V160 Q365 108 410 160 V238Z"/><path d="M305 238 V184 H425 V238Z"/>
+                  <path d="M410 238 V148 Q448 104 486 148 V238Z"/><path d="M392 238 V176 H505 V238Z"/>
+                  <path d="M110 238 V70 L125 48 L140 70 V238Z"/><path d="M555 238 V56 L571 30 L587 56 V238Z"/>
+                </g>
+                <g fill="#07180f" stroke="#cfa85b" stroke-opacity=".75">
+                  <path d="M345 238 V184 Q365 155 385 184 V238Z"/><path d="M258 238 V179 Q275 153 292 179 V238Z"/><path d="M430 238 V179 Q448 151 466 179 V238Z"/>
+                  <path d="M118 238 V112 Q125 95 132 112 V238Z"/><path d="M563 238 V100 Q571 82 579 100 V238Z"/>
+                </g>
+                <g fill="url(#mosqueGlow)">
+                  <path d="M330 160 Q365 92 400 160Z"/><path d="M420 148 Q448 87 476 148Z"/><path d="M242 145 Q265 85 288 145Z"/>
+                  <path d="M110 70 L125 20 L140 70Z"/><path d="M555 56 L571 3 L587 56Z"/>
+                </g>
+                <g stroke="#e7c16b" stroke-width="2" stroke-linecap="round" opacity=".8"><path d="M125 20V8"/><path d="M571 3V0"/><path d="M365 92V78"/><path d="M448 87V75"/><path d="M265 85V73"/></g>
+                <g fill="#f0c86e" opacity=".7"><circle cx="125" cy="8" r="2.5"/><circle cx="571" cy="2" r="2.5"/><circle cx="365" cy="78" r="2"/><circle cx="448" cy="75" r="2"/><circle cx="265" cy="73" r="2"/></g>
+            </svg>
 
             <span class="eyebrow">YOUR PATH TO DAILY REMEMBRANCE</span>
 
@@ -1035,7 +1056,7 @@
    try{
     const endpoints=["https://overpass.kumi.systems/api/interpreter","https://overpass-api.de/api/interpreter"];
     const controllers=endpoints.map(()=>new AbortController());
-    const requests=endpoints.map((endpoint,index)=>fetch(endpoint+"?data="+encodeURIComponent(query),{headers:{"Accept":"application/json"},signal:controllers[index].signal}).then(response=>{if(!response.ok)throw new Error("Map data service returned "+response.status);return response.json();}));
+    const requests=endpoints.map((endpoint,index)=>fetch(endpoint+"?data="+encodeURIComponent(query),{headers:{"Accept":"application/json"},signal:AbortSignal.any([controllers[index].signal,AbortSignal.timeout(8000)])}).then(response=>{if(!response.ok)throw new Error("Map data service returned "+response.status);return response.json();}));
     let data;
     try{data=await Promise.any(requests);}finally{controllers.forEach(controller=>controller.abort());}
     renderMasjids(Array.isArray(data.elements)?data.elements:[]);
