@@ -2503,3 +2503,59 @@ body[data-view="tasbeeh-tool"] #tasbeeh-tool,
 body[data-view="hadith-library"] #hadith-library,
 body[data-view="routine"] #routine,
 body[data-view="bookmarks"] #bookmarks { display:block; }
+
+
+/* Reader and footer polish based on the latest screenshots */
+body[data-view="home"] footer.site-footer,
+body[data-view="home"] footer.contact-footer {
+  box-sizing:border-box;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+}
+body[data-view="home"] footer.contact-footer {
+  grid-template-columns:minmax(130px,.7fr) minmax(220px,1.2fr) minmax(180px,.9fr) minmax(230px,1.3fr);
+  padding-left:clamp(14px,2vw,30px);
+  padding-right:clamp(14px,2vw,30px);
+}
+body[data-view="home"] .contact-footer-title,
+body[data-view="home"] .contact-footer-link,
+body[data-view="home"] .contact-footer-love { min-width:0; }
+body[data-view="home"] .contact-footer-title h2 { overflow-wrap:anywhere; }
+body[data-view="home"] .contact-footer-link > span:last-child { min-width:0; overflow-wrap:anywhere; }
+body[data-view="home"] footer.site-footer { box-sizing:border-box; width:100%; max-width:100%; min-width:0; }
+body[data-view="home"] footer.site-footer .footer-nav { min-width:0; flex-wrap:wrap; }
+body[data-view="home"] footer.site-footer .footer-note { min-width:0; overflow-wrap:anywhere; }
+@media(min-width:1100px) {
+  body[data-view="home"] footer.contact-footer { grid-template-columns:minmax(140px,.65fr) minmax(240px,1.25fr) minmax(190px,.95fr) minmax(240px,1.2fr); }
+}
+@media(max-width:1050px) {
+  body[data-view="home"] footer.contact-footer { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:560px) {
+  body[data-view="home"] footer.contact-footer { grid-template-columns:minmax(0,1fr); }
+}
+
+/* Make Quran verse actions match the site's emerald-and-gold controls. */
+body[data-view="quran"] #quran button,
+body[data-view="quran"] #quran .bookmark-verse,
+body[data-view="quran"] #quran [data-bookmark-verse] {
+  max-width:100%;
+  border:1px solid #3b654d;
+  border-radius:8px;
+  background:#0b3023;
+  color:#e8c36b;
+  padding:9px 12px;
+  font:600 12px/1.4 inherit;
+  cursor:pointer;
+}
+body[data-view="quran"] #quran button:hover,
+body[data-view="quran"] #quran .bookmark-verse:hover,
+body[data-view="quran"] #quran [data-bookmark-verse]:hover {
+  border-color:#d9b45f;
+  background:#123a2a;
+}
+body[data-view="quran"] #quran .surah-card,
+body[data-view="quran"] #quran .surah-content,
+body[data-view="quran"] #quran .verse,
+body[data-view="quran"] #quran .ayah { min-width:0; overflow-wrap:anywhere; }
