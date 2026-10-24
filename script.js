@@ -160,16 +160,15 @@ function initQuran() {
             const res = await fetch("https://api.alquran.cloud/v1/surah");
             const result = await res.json();
             surahs = result.data;
-            quranStatus.textContent = "Search a Surah by name or number.";
+            quranStatus.textContent = "Choose any Surah below to start reading. Search by name or number to find a specific Surah.";
+            renderSurahs();
         } catch { quranStatus.textContent = "Error loading Quran."; }
     }
 
     function renderSurahs() {
         const query = quranSearch.value.trim().toLowerCase();
         quranResults.replaceChildren();
-        if (!query) return;
-        
-        const matches = surahs.filter(s => [s.number, s.englishName].some(v => String(v).toLowerCase().includes(query)));
+        const matches = surahs.filter(s => !query || [s.number, s.englishName, s.name].some(v => String(v).toLowerCase().includes(query)));
         
         matches.forEach(surah => {
             const card = document.createElement("article");
