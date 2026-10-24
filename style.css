@@ -1812,3 +1812,20 @@ body {
 @media(max-width:1150px){.dashboard-hero-grid{grid-template-columns:1fr}.dashboard-prayer-card{padding:18px}.dashboard-prayer-times{margin:15px 0 12px}}
 @media(max-width:850px){.dashboard-topbar{flex-wrap:wrap}.dashboard-search{flex-basis:100%;order:0}.dashboard-location{order:1}.dashboard-date{order:2;margin-left:auto}.dashboard-progress-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard-mini-cards{grid-template-columns:1fr}}
 @media(max-width:500px){.dashboard-progress{padding:15px}.dashboard-progress-item{padding:10px}.dashboard-prayer-times strong{font-size:9px}.dashboard-hero-grid .welcome h1{font-size:36px}.dashboard-hero-grid .hero-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Layout and truthful empty states */
+.container { display:block !important; }
+.dashboard-topbar { width:100%; }
+.dashboard-location { border:1px solid #315947; border-radius:11px; padding:9px 12px; background:#09271f; text-align:left; cursor:pointer; font:inherit; }
+.dashboard-hero-grid { grid-template-columns:minmax(0,1.5fr) minmax(270px,.8fr); }
+.dashboard-prayer-card { min-width:0; justify-content:center; }
+.dashboard-prayer-intro { color:var(--muted); font-size:13px; line-height:1.6; }
+.dashboard-prayer-placeholder { display:flex; align-items:center; gap:12px; margin:18px 0; padding:15px; border:1px solid #28513f; border-radius:12px; background:#09231b; }
+.dashboard-prayer-placeholder>span { font-size:25px; }
+.dashboard-prayer-placeholder strong,.dashboard-prayer-placeholder small { display:block; }
+.dashboard-prayer-placeholder small { color:var(--muted); font-size:11px; margin-top:4px; }
+.dashboard-prayer-link { width:100%; text-align:left; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+.dashboard-demo-note { display:none !important; }
+.dashboard-progress-item { grid-template-columns:auto 1fr; }
+.dashboard-progress-item strong { font-family:Georgia,serif; color:var(--gold); }
+@media(max-width:1150px) { .dashboard-hero-grid { grid-template-columns:1fr; } }
