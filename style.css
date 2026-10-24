@@ -1912,3 +1912,51 @@ body {
 .contact-footer-love>span { color:#f16b73; font-size:22px; }.contact-footer-love p { margin:0; color:var(--muted); font-size:12px; line-height:1.6; }.contact-footer-love strong { color:var(--gold); font-weight:600; }
 @media(max-width:1050px){.contact-footer{grid-template-columns:1fr 1fr;gap:16px}.contact-footer-love{border-left:0;padding-left:0}}
 @media(max-width:560px){.contact-footer{grid-template-columns:1fr;padding:20px 4px}.contact-footer-love{border-top:1px solid #28513f;padding-top:15px}}
+
+
+/* Single-view app navigation: keep the homepage concise and open each tool in its own view. */
+.app-section { display:none; }
+body[data-view="home"] .app-section { display:none; }
+body[data-view="quran"] #quran,
+body[data-view="adhkar"] #adhkar,
+body[data-view="tasbeeh-tool"] #tasbeeh-tool,
+body[data-view="hadith-library"] #hadith-library,
+body[data-view="routine"] #routine,
+body[data-view="bookmarks"] #bookmarks { display:block; }
+body[data-view="home"] .dashboard-inspiration-grid,
+body[data-view="home"] .daily-card,
+body[data-view="home"] .container > section[aria-labelledby="features-heading"] { display:none !important; }
+body[data-view="home"] .dashboard-topbar,
+body[data-view="home"] .dashboard-hero-grid,
+body[data-view="home"] .dashboard-quick-actions,
+body[data-view="home"] .dashboard-main-grid { display:initial; }
+body[data-view="home"] .dashboard-topbar { display:flex; }
+body[data-view="home"] .dashboard-hero-grid { display:grid; }
+body[data-view="home"] .dashboard-quick-actions { display:grid; }
+body[data-view="home"] .dashboard-main-grid { display:grid; }
+body:not([data-view="home"]) .dashboard-topbar,
+body:not([data-view="home"]) .dashboard-hero-grid,
+body:not([data-view="home"]) .dashboard-quick-actions,
+body:not([data-view="home"]) .dashboard-main-grid,
+body:not([data-view="home"]) .dashboard-inspiration-grid,
+body:not([data-view="home"]) .daily-card,
+body:not([data-view="home"]) .container > section[aria-labelledby="features-heading"],
+body:not([data-view="home"]) .contact-footer,
+body:not([data-view="home"]) footer,
+body:not([data-view="home"]) .back-to-top { display:none !important; }
+body[data-view="home"] .contact-footer { display:grid; }
+body[data-view="home"] footer.site-footer { display:flex; }
+body[data-view="home"] .back-to-top { display:grid; }
+body[data-view="home"] .container { min-height:0; }
+body:not([data-view="home"]) .container { min-height:calc(100vh - 170px); }
+body[data-view="quran"] #quran { max-width:1100px; margin:0 auto 36px; padding:clamp(20px,3vw,38px); }
+.reader-back-link { display:inline-flex; align-items:center; gap:8px; margin:0 0 22px; padding:9px 13px; border:1px solid #315947; border-radius:10px; color:var(--gold); text-decoration:none; background:#09271f; font-size:13px; }
+.reader-back-link:hover { background:#12382b; }
+body[data-view="quran"] #quran h2 { font-size:clamp(30px,4vw,42px); }
+body[data-view="quran"] #quran #quran-results { max-height:none; }
+@media(max-width:600px) {
+ body[data-view="home"] .dashboard-hero-grid .welcome { padding:22px; }
+ body[data-view="home"] .dashboard-hero-grid .welcome h1 { font-size:34px; }
+ body[data-view="home"] .dashboard-main-grid { gap:10px; }
+ body[data-view="quran"] #quran { padding:18px 14px; }
+}

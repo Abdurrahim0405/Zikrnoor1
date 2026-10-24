@@ -245,7 +245,7 @@
     </style>
 </head>
 
-<body>
+<body data-view="home">
 
     <!-- Skip link for keyboard users -->
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -478,6 +478,7 @@
              QURAN
              ============================================================ -->
         <section class="app-section" id="quran">
+            <a class="reader-back-link" href="#home">← Back to Home</a>
             <span class="eyebrow">READ &amp; REFLECT</span>
             <h2>Quran</h2>
             <p>Your space for Quran reading and reflection.</p>
@@ -818,12 +819,35 @@
   const target=document.getElementById(map?map[1]:"quran");
   if(target)target.scrollIntoView({behavior:"smooth"});
  });
- const quranSection=document.getElementById("quran");
- if(quranSection){
-  const openQuran=()=>{quranSection.scrollIntoView({behavior:"auto",block:"start"});};
-  if(location.hash==="#quran") requestAnimationFrame(()=>setTimeout(openQuran,100));
-  else if(!location.hash) setTimeout(openQuran,250);
+ function renderView(){
+  const requested=(location.hash||"#home").slice(1);
+  const target=document.getElementById(requested);
+  const view=target&&target.classList.contains("app-section")?requested:"home";
+  document.body.dataset.view=view;
+  document.querySelectorAll(".navbar a").forEach(link=>{
+   const key=link.getAttribute("href").slice(1);
+   link.classList.toggle("active",view==="home"?key==="home":key===view);
+  });
+  if(view!=="home") window.scrollTo({top:0,behavior:"auto"});
+  else window.scrollTo({top:0,behavior:"auto"});
  }
+ document.addEventListener("click",event=>{
+  const link=event.target.closest('a[href^="#"]');
+  if(!link) return;
+  const hash=link.getAttribute("href");
+  if(!hash||hash==="#")return;
+  const id=hash.slice(1), target=document.getElementById(id);
+  if(id==="home"|| (target&&target.classList.contains("app-section"))){
+   event.preventDefault();
+   if(location.hash===hash) renderView();
+   else location.hash=hash;
+  } else if(target){
+   const section=target.closest(".app-section");
+   if(section){event.preventDefault();location.hash="#"+section.id;}
+  }
+ });
+ window.addEventListener("hashchange",renderView);
+ renderView();
 })();
 </script>
 </body>
