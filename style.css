@@ -1944,8 +1944,8 @@ body:not([data-view="home"]) .container > section[aria-labelledby="features-head
 body:not([data-view="home"]) .contact-footer,
 body:not([data-view="home"]) footer,
 body:not([data-view="home"]) .back-to-top { display:none !important; }
-body[data-view="home"] .contact-footer,
-body[data-view="home"] footer { display:grid; }
+body[data-view="home"] .contact-footer { display:grid; }
+body[data-view="home"] footer.site-footer { display:flex; }
 body[data-view="home"] .back-to-top { display:grid; }
 body[data-view="home"] .container { min-height:0; }
 body:not([data-view="home"]) .container { min-height:calc(100vh - 170px); }
