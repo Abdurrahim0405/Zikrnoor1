@@ -2171,3 +2171,200 @@ body[data-view="home"] .contact-footer-love { min-width:0; }
  body[data-view="home"] footer.contact-footer { grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px; }
  body[data-view="home"] .contact-footer-love { border-left:0;border-top:1px solid #28513f;padding:14px 0 0; }
 }
+
+
+/* ===== Zikrnoor premium editorial home refresh ===== */
+body[data-view="home"] {
+  background:
+    radial-gradient(ellipse at 72% 2%, rgba(24,104,72,.16), transparent 34%),
+    radial-gradient(ellipse at 30% 42%, rgba(13,65,47,.12), transparent 40%),
+    #040d0a;
+}
+body[data-view="home"] .container { max-width:1740px; padding:22px clamp(18px,2.4vw,38px) 46px; }
+body[data-view="home"] .dashboard-topbar { gap:12px; margin-bottom:22px; }
+body[data-view="home"] .dashboard-search {
+  min-height:58px; padding:0 19px; border-radius:15px; border-color:#28513f;
+  background:rgba(8,34,26,.84); box-shadow:inset 0 1px rgba(255,255,255,.025);
+}
+body[data-view="home"] .dashboard-search input { font-size:15px; }
+body[data-view="home"] .dashboard-location, body[data-view="home"] .dashboard-date {
+  min-height:58px; padding:10px 15px; border-radius:14px; background:#091a14; border-color:#244735;
+}
+body[data-view="home"] .dashboard-hero-grid {
+  grid-template-columns:minmax(0,1.45fr) minmax(340px,.82fr); gap:18px; margin-bottom:18px;
+}
+body[data-view="home"] .dashboard-hero-grid .welcome {
+  position:relative; isolation:isolate; overflow:hidden; min-height:440px;
+  padding:clamp(30px,4vw,58px); border:1px solid #285b46; border-radius:24px;
+  background:
+    radial-gradient(ellipse at 88% 18%, rgba(203,167,89,.13), transparent 28%),
+    radial-gradient(ellipse at 8% 100%, rgba(34,151,104,.16), transparent 42%),
+    linear-gradient(135deg,#0b3024 0%,#071e17 62%,#061810 100%);
+  box-shadow:0 22px 65px rgba(0,0,0,.18), inset 0 1px rgba(255,255,255,.035);
+}
+body[data-view="home"] .dashboard-hero-grid .welcome:after {
+  content:"۞"; position:absolute; z-index:-1; right:-35px; bottom:-112px;
+  color:rgba(218,185,112,.045); font:360px/1 Georgia,serif; pointer-events:none;
+}
+body[data-view="home"] .dashboard-hero-grid .welcome .eyebrow {
+  display:inline-flex; align-items:center; gap:11px; color:#e9bf67; font-size:11px;
+  letter-spacing:.2em; font-weight:800;
+}
+body[data-view="home"] .dashboard-hero-grid .welcome .eyebrow:before { content:""; width:27px; height:1px; background:#d8ad59; }
+body[data-view="home"] .dashboard-hero-grid .welcome h1 {
+  max-width:720px; margin:25px 0 17px; font-size:clamp(43px,4.2vw,67px);
+  line-height:.99; letter-spacing:-.045em; font-weight:500;
+}
+body[data-view="home"] .dashboard-hero-grid .welcome h1 span {
+  display:block; color:#efc76f; font-style:italic; letter-spacing:-.035em;
+}
+body[data-view="home"] .dashboard-hero-grid .welcome>p {
+  max-width:590px; margin:0 0 27px; color:#b9c9bf; font-size:15px; line-height:1.8;
+}
+body[data-view="home"] .dashboard-hero-grid .primary-button {
+  display:inline-flex; align-items:center; justify-content:center; gap:22px; min-width:0;
+  padding:16px 22px; border-radius:12px; font-size:14px;
+  box-shadow:0 8px 28px rgba(215,172,83,.12); transition:transform .2s,box-shadow .2s;
+}
+body[data-view="home"] .dashboard-hero-grid .primary-button:hover { transform:translateY(-2px); box-shadow:0 12px 34px rgba(215,172,83,.2); }
+body[data-view="home"] .hero-proofs { display:flex; flex-wrap:wrap; gap:8px; margin-top:25px; }
+body[data-view="home"] .hero-proof {
+  padding:8px 11px; border:1px solid rgba(114,157,128,.28); border-radius:999px;
+  background:rgba(5,23,17,.35); color:#b5c9bb; font-size:11px; letter-spacing:.01em;
+}
+body[data-view="home"] .dashboard-prayer-card {
+  position:relative; overflow:hidden; padding:28px 25px 21px; border-radius:24px;
+  border-color:#285b46; background:linear-gradient(155deg,#0c2d22 0%,#071b14 72%,#06150f 100%);
+  box-shadow:0 22px 65px rgba(0,0,0,.15),inset 0 1px rgba(255,255,255,.03);
+}
+body[data-view="home"] .dashboard-prayer-card:before {
+  content:""; position:absolute; top:-70px; right:-55px; width:180px; height:180px;
+  border:1px solid rgba(223,184,101,.12); border-radius:50%;
+  box-shadow:0 0 0 22px rgba(223,184,101,.025),0 0 0 45px rgba(223,184,101,.018);
+  pointer-events:none;
+}
+body[data-view="home"] .dashboard-prayer-card h2 { position:relative; font-size:28px; letter-spacing:-.025em; margin:13px 0 7px; }
+body[data-view="home"] .dashboard-prayer-intro { max-width:340px; font-size:12px; line-height:1.65; }
+body[data-view="home"] .dashboard-prayer-list { margin:16px 0 17px; }
+body[data-view="home"] .dashboard-prayer-list div { padding:12px 0; border-bottom:1px solid rgba(99,145,114,.19); font-size:13px; }
+body[data-view="home"] .dashboard-prayer-list strong { font-size:14px; }
+body[data-view="home"] .dashboard-prayer-actions button { min-height:43px; border-radius:10px; font-size:12px; }
+body[data-view="home"] .dashboard-demo-note { margin-top:13px; font-size:10px; }
+body[data-view="home"] .dashboard-quick-actions { gap:13px; margin-bottom:20px; }
+body[data-view="home"] .dashboard-action-card {
+  position:relative; overflow:hidden; min-height:108px; padding:18px 16px;
+  border-color:#244c3a; border-radius:17px;
+  background:linear-gradient(145deg,rgba(12,43,32,.96),rgba(5,23,17,.98));
+  box-shadow:inset 0 1px rgba(255,255,255,.025); transition:transform .22s,border-color .22s,background .22s;
+}
+body[data-view="home"] .dashboard-action-card:after {
+  content:""; position:absolute; width:90px; height:90px; right:-40px; top:-45px;
+  border:1px solid rgba(216,180,100,.09); border-radius:50%; pointer-events:none;
+}
+body[data-view="home"] .dashboard-action-card:hover { transform:translateY(-3px); border-color:#b28d4c; background:linear-gradient(145deg,#103b2b,#071e16); }
+body[data-view="home"] .dashboard-action-icon { flex-basis:46px; width:46px; height:46px; border-radius:13px; background:rgba(218,183,106,.07); border-color:#3c694e; }
+body[data-view="home"] .dashboard-action-card strong { font-size:18px; letter-spacing:-.02em; }
+body[data-view="home"] .dashboard-action-card small { font-size:11px; line-height:1.55; }
+body[data-view="home"] .dashboard-action-card i { transition:transform .2s,border-color .2s; }
+body[data-view="home"] .dashboard-action-card:hover i { transform:translateX(2px); border-color:#d9b45f; }
+body[data-view="home"] .dashboard-main-grid { gap:18px; margin-bottom:20px; }
+body[data-view="home"] .dashboard-panel {
+  padding:25px; border-radius:20px; border-color:#244c3a;
+  background:linear-gradient(145deg,#0a281e 0%,#061a13 100%);
+  box-shadow:inset 0 1px rgba(255,255,255,.025);
+}
+body[data-view="home"] .dashboard-panel-heading { margin-bottom:22px; }
+body[data-view="home"] .dashboard-panel-heading h2 { font-size:23px; letter-spacing:-.025em; }
+body[data-view="home"] .dashboard-panel-heading>a { font-size:12px; }
+body[data-view="home"] .dashboard-progress-ring {
+  background:conic-gradient(#4ad5aa 0deg 270deg,#234536 270deg 360deg);
+  box-shadow:0 0 0 8px rgba(48,137,100,.055);
+}
+body[data-view="home"] .dashboard-progress-ring:before { background:#082319; }
+body[data-view="home"] .dashboard-checklist { gap:16px; }
+body[data-view="home"] .dashboard-checklist a { font-size:13px; }
+body[data-view="home"] .dashboard-check-empty { border-color:#638673; transition:background .2s,border-color .2s; }
+body[data-view="home"] .dashboard-checklist a:hover .dashboard-check-empty { border-color:#e5bd67; background:rgba(229,189,103,.1); }
+body[data-view="home"] .dashboard-data-note { font-size:10px; }
+body[data-view="home"] .dashboard-quran-cover {
+  flex-basis:92px; min-height:138px; border-radius:8px; background:
+  linear-gradient(135deg,rgba(226,187,98,.08),transparent 42%),linear-gradient(145deg,#123b2b,#061810);
+}
+body[data-view="home"] .dashboard-reading-details>strong { font-size:19px; line-height:1.4; }
+body[data-view="home"] .dashboard-reading-details p { font-size:12px; line-height:1.7; }
+body[data-view="home"] .dashboard-reading-track { height:5px; }
+body[data-view="home"] .dashboard-round-link { transition:background .2s,border-color .2s; }
+body[data-view="home"] .dashboard-round-link:hover { background:rgba(224,184,95,.1); border-color:#d6b25e; }
+body[data-view="home"] .dashboard-inspiration-grid { gap:14px; margin-bottom:22px; }
+body[data-view="home"] .dashboard-inspiration-grid .dashboard-panel { min-height:225px; }
+body[data-view="home"] .dashboard-verse-panel h2 { font-size:clamp(26px,2vw,34px); line-height:1.7; }
+body[data-view="home"] .dashboard-hadith-panel blockquote { font-size:18px; line-height:1.65; }
+body[data-view="home"] .dashboard-calendar-panel h2 { font-size:27px; }
+body[data-view="home"] .daily-card {
+  position:relative; overflow:hidden; border:1px solid #31543d; border-radius:19px;
+  background:radial-gradient(ellipse at 100% 0%,rgba(207,169,91,.11),transparent 38%),linear-gradient(110deg,#0b2b20,#061a13);
+  padding:25px 28px; margin:0 0 30px;
+}
+body[data-view="home"] .daily-card .daily-icon { border:1px solid #6a6842; border-radius:15px; background:rgba(222,182,95,.07); color:#e8c46e; }
+body[data-view="home"] .daily-card h2 { font-size:24px; letter-spacing:-.025em; }
+body[data-view="home"] .daily-card p { max-width:650px; font-size:13px; line-height:1.7; color:#b9c9bf; }
+body[data-view="home"] .section-heading { margin:34px 0 17px; }
+body[data-view="home"] .section-heading .eyebrow { color:#d9b45f; letter-spacing:.16em; }
+body[data-view="home"] .section-heading h2 { margin-top:8px; font-size:clamp(28px,3vw,38px); letter-spacing:-.035em; }
+body[data-view="home"] .feature-grid { gap:14px; }
+body[data-view="home"] .feature-card {
+  position:relative; overflow:hidden; min-height:225px; padding:24px;
+  border:1px solid #244c3a; border-radius:19px;
+  background:linear-gradient(145deg,#0b2b20,#061810);
+  box-shadow:inset 0 1px rgba(255,255,255,.025); transition:transform .22s,border-color .22s,background .22s;
+}
+body[data-view="home"] .feature-card:hover { transform:translateY(-3px); border-color:#9c8148; background:linear-gradient(145deg,#103728,#071d15); }
+body[data-view="home"] .feature-number { color:rgba(223,190,117,.7); font-size:11px; letter-spacing:.1em; }
+body[data-view="home"] .feature-icon { width:48px; height:48px; border-radius:14px; border:1px solid #3c694e; background:rgba(221,184,101,.06); }
+body[data-view="home"] .feature-tag { color:#93bea2; font-size:9px; letter-spacing:.14em; }
+body[data-view="home"] .feature-card h3 { font-size:22px; letter-spacing:-.02em; }
+body[data-view="home"] .feature-card p { font-size:13px; line-height:1.7; }
+body[data-view="home"] .card-link { display:inline-flex; align-items:center; gap:12px; margin-top:7px; color:#e9c46c; font-size:12px; }
+body[data-view="home"] .card-link span { transition:transform .2s; }
+body[data-view="home"] .feature-card:hover .card-link span { transform:translateX(4px); }
+@media(max-width:1250px) {
+ body[data-view="home"] .dashboard-hero-grid { grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr); }
+ body[data-view="home"] .dashboard-hero-grid .welcome { min-height:400px; }
+ body[data-view="home"] .dashboard-hero-grid .welcome h1 { font-size:clamp(42px,4vw,58px); }
+ body[data-view="home"] .dashboard-action-card { padding:14px 12px; }
+ body[data-view="home"] .dashboard-action-card strong { font-size:16px; }
+}
+@media(max-width:1000px) {
+ body[data-view="home"] .dashboard-hero-grid { grid-template-columns:1fr; }
+ body[data-view="home"] .dashboard-hero-grid .welcome { min-height:360px; }
+ body[data-view="home"] .dashboard-prayer-card { padding:24px; }
+ body[data-view="home"] .dashboard-quick-actions { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ body[data-view="home"] .dashboard-inspiration-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ body[data-view="home"] .dashboard-inspiration-grid .dashboard-calendar-panel { grid-column:1/-1; }
+}
+@media(max-width:600px) {
+ body[data-view="home"] .container { padding:13px 12px 30px; }
+ body[data-view="home"] .dashboard-topbar { gap:8px; margin-bottom:14px; }
+ body[data-view="home"] .dashboard-search { min-height:50px; }
+ body[data-view="home"] .dashboard-location, body[data-view="home"] .dashboard-date { min-height:48px; padding:8px 10px; }
+ body[data-view="home"] .dashboard-hero-grid .welcome { min-height:0; padding:27px 21px; border-radius:19px; }
+ body[data-view="home"] .dashboard-hero-grid .welcome h1 { margin:21px 0 14px; font-size:clamp(39px,10vw,51px); }
+ body[data-view="home"] .dashboard-hero-grid .welcome>p { font-size:13px; }
+ body[data-view="home"] .dashboard-hero-grid .primary-button { width:100%; justify-content:space-between; }
+ body[data-view="home"] .hero-proofs { gap:6px; }
+ body[data-view="home"] .hero-proof { font-size:10px; }
+ body[data-view="home"] .dashboard-prayer-card { padding:21px 18px; border-radius:19px; }
+ body[data-view="home"] .dashboard-quick-actions { gap:9px; }
+ body[data-view="home"] .dashboard-action-card { min-height:100px; border-radius:14px; }
+ body[data-view="home"] .dashboard-panel { padding:19px 16px; border-radius:17px; }
+ body[data-view="home"] .dashboard-panel-heading h2 { font-size:20px; }
+ body[data-view="home"] .dashboard-inspiration-grid { grid-template-columns:1fr; }
+ body[data-view="home"] .dashboard-inspiration-grid .dashboard-calendar-panel { grid-column:auto; }
+ body[data-view="home"] .daily-card { gap:13px; padding:20px 17px; border-radius:16px; }
+ body[data-view="home"] .daily-card h2 { font-size:20px; }
+ body[data-view="home"] .feature-card { min-height:0; padding:22px; border-radius:16px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ body[data-view="home"] .dashboard-action-card,body[data-view="home"] .feature-card,
+ body[data-view="home"] .dashboard-hero-grid .primary-button { transition:none; }
+}
