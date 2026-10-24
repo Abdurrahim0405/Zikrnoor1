@@ -2490,3 +2490,16 @@ body[data-view="home"] .hero-mosque-art { position:absolute;z-index:0;right:155p
 body[data-view="home"] .dashboard-hero-grid .welcome .hero-orbs { z-index:0;pointer-events:none; }
 @media(max-width:900px) { body[data-view="home"] .hero-mosque-art { right:125px;width:60%;opacity:.7; } }
 @media(max-width:600px) { body[data-view="home"] .hero-mosque-art { right:0;bottom:110px;width:100%;height:55%;opacity:.36; } }
+
+
+/* Keep the app's single-view navigation truly single-view. */
+body[data-view="home"] .dashboard-utility-grid { display:grid; }
+body:not([data-view="home"]) .dashboard-utility-grid { display:none !important; }
+body[data-view="qibla"] #qibla,
+body[data-view="nearby-masjid"] #nearby-masjid { display:block; }
+body[data-view="quran"] #quran,
+body[data-view="adhkar"] #adhkar,
+body[data-view="tasbeeh-tool"] #tasbeeh-tool,
+body[data-view="hadith-library"] #hadith-library,
+body[data-view="routine"] #routine,
+body[data-view="bookmarks"] #bookmarks { display:block; }
