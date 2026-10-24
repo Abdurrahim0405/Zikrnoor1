@@ -268,7 +268,7 @@
     </nav>
 
     <main class="container" id="main-content">
-<div class="dashboard-topbar"><label class="dashboard-search">⌕ <input id="dashboard-global-search" type="search" placeholder="Search Surah, Ayah, Hadith, Adhkar…"><kbd>⌘ K</kbd></label><div class="dashboard-location">📍 <span><strong>Bangalore</strong><small>Location · Demo</small></span></div><div class="dashboard-date">▦ <span><strong id="dashboard-date">Today</strong><small>Hijri date · Demo</small></span></div></div>
+<div class="dashboard-topbar"><label class="dashboard-search">⌕ <input id="dashboard-global-search" type="search" placeholder="Search Surah, Ayah, Hadith, Adhkar…"><kbd>⌘ K</kbd></label><button type="button" class="dashboard-location" id="dashboard-location-button">📍 <span><strong>Set your location</strong><small>Choose city for prayer times</small></span></button><div class="dashboard-date">▦ <span><strong id="dashboard-date">Today</strong><small>Local date</small></span></div></div>
 <div class="dashboard-hero-grid">
 
         <!-- ============================================================
@@ -430,13 +430,13 @@
 
         <section class="dashboard-progress"><div class="dashboard-progress-heading"><div><span class="eyebrow">YOUR DAILY PRACTICE</span><h2>Today’s Progress</h2></div><span class="dashboard-today-pill">● Today</span></div>
         <div class="dashboard-progress-grid">
-        <a href="#quran" class="dashboard-progress-item"><span class="dashboard-progress-icon">📖</span><div class="dashboard-progress-track"><i style="width:60%"></i></div><strong>3/5</strong><span>Quran ayahs</span></a>
-        <a href="#adhkar" class="dashboard-progress-item"><span class="dashboard-progress-icon">🤲</span><div class="dashboard-progress-track gold-track"><i style="width:42%"></i></div><strong>5/12</strong><span>Adhkar completed</span></a>
-        <a href="#tasbeeh-tool" class="dashboard-progress-item"><span class="dashboard-progress-icon">📿</span><div class="dashboard-progress-track"><i style="width:40%"></i></div><strong>120/300</strong><span>Tasbeeh count</span></a>
-        <a href="#routine" class="dashboard-progress-item"><span class="dashboard-progress-icon">✓</span><div class="dashboard-progress-track purple-track"><i style="width:50%"></i></div><strong>3/6</strong><span>Routine tasks</span></a></div>
+        <a href="#quran" class="dashboard-progress-item"><span class="dashboard-progress-icon">📖</span><div class="dashboard-progress-track"><i style="width:0%"></i></div><strong>Start</strong><span>Quran reading</span></a>
+        <a href="#adhkar" class="dashboard-progress-item"><span class="dashboard-progress-icon">🤲</span><div class="dashboard-progress-track gold-track"><i style="width:0%"></i></div><strong>Start</strong><span>Daily Adhkar</span></a>
+        <a href="#tasbeeh-tool" class="dashboard-progress-item"><span class="dashboard-progress-icon">📿</span><div class="dashboard-progress-track"><i style="width:0%"></i></div><strong>Start</strong><span>Tasbeeh session</span></a>
+        <a href="#routine" class="dashboard-progress-item"><span class="dashboard-progress-icon">✓</span><div class="dashboard-progress-track purple-track"><i style="width:0%"></i></div><strong>Build</strong><span>Your routine</span></a></div>
         <div class="dashboard-mini-cards">
-        <a href="#quran" class="dashboard-mini-card"><span>📖</span><div><strong>Continue Reading</strong><p>Surah Al-Baqarah · Ayah 255</p><small>Resume Quran reading →</small></div></a>
-        <a href="#tasbeeh-tool" class="dashboard-mini-card"><span>📿</span><div><strong>Last Tasbeeh Session</strong><p>SubhanAllah · 100 / 100</p><small>Open Tasbeeh →</small></div></a>
+        <a href="#quran" class="dashboard-mini-card"><span>📖</span><div><strong>Continue Reading</strong><p>Pick up where you left off in the Quran</p><small>Resume Quran reading →</small></div></a>
+        <a href="#tasbeeh-tool" class="dashboard-mini-card"><span>📿</span><div><strong>Last Tasbeeh Session</strong><p>Continue your next Tasbeeh session</p><small>Open Tasbeeh →</small></div></a>
         <a href="#adhkar" class="dashboard-mini-card"><span>🤲</span><div><strong>Daily Adhkar</strong><p>Morning and evening remembrance</p><small>Continue Adhkar →</small></div></a>
         </div></section>
 
@@ -705,7 +705,7 @@
     <!-- Main application script — MUST stay as the last script -->
     <script src="./script.js"></script>
 <script>
-(function(){const d=document.getElementById("dashboard-date");if(d)d.textContent=new Intl.DateTimeFormat("en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).format(new Date());const s=document.getElementById("dashboard-global-search");if(s)s.addEventListener("keydown",e=>{if(e.key!=="Enter"||!s.value.trim())return;const q=s.value.trim().toLowerCase();const m=[["quran","quran"],["ayah","quran"],["surah","quran"],["adhkar","adhkar"],["tasbeeh","tasbeeh-tool"],["hadith","hadith-library"],["routine","routine"],["bookmark","bookmarks"]].find(x=>q.includes(x[0]));const target=document.getElementById(m?m[1]:"quran");if(target)target.scrollIntoView({behavior:"smooth"});});})();
+(function(){const d=document.getElementById("dashboard-date");if(d)d.textContent=new Intl.DateTimeFormat("en-IN",{weekday:"short",day:"numeric",month:"short",year:"numeric"}).format(new Date());const loc=()=>{const city=window.prompt("Enter your city for prayer times (for example, Bengaluru):");if(city&&city.trim()){const b=document.querySelector("#dashboard-location-button strong");if(b)b.textContent=city.trim();const small=document.querySelector("#dashboard-location-button small");if(small)small.textContent="Location selected · prayer times need a calculation source";const intro=document.querySelector(".dashboard-prayer-intro");if(intro)intro.textContent="City selected: "+city.trim()+". Accurate prayer times will appear when a prayer-time service is connected.";}};["dashboard-location-button","dashboard-prayer-location-button"].forEach(id=>{const b=document.getElementById(id);if(b)b.addEventListener("click",loc)});const s=document.getElementById("dashboard-global-search");if(s)s.addEventListener("keydown",e=>{if(e.key!=="Enter"||!s.value.trim())return;const q=s.value.trim().toLowerCase();const m=[["quran","quran"],["ayah","quran"],["surah","quran"],["adhkar","adhkar"],["tasbeeh","tasbeeh-tool"],["hadith","hadith-library"],["routine","routine"],["bookmark","bookmarks"]].find(x=>q.includes(x[0]));const target=document.getElementById(m?m[1]:"quran");if(target)target.scrollIntoView({behavior:"smooth"});});})();
 </script>
 </body>
 </html>
