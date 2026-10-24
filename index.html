@@ -268,7 +268,7 @@
     </nav>
 
     <main class="container" id="main-content">
-<div class="dashboard-topbar"><label class="dashboard-search">⌕ <input id="dashboard-global-search" type="search" placeholder="Search Surah, Ayah, Hadith, Adhkar…"><kbd>⌘ K</kbd></label><div class="dashboard-location">📍 <span><strong>Bangalore</strong><small>Location · Demo</small></span></div><div class="dashboard-date">▦ <span><strong id="dashboard-date">Today</strong><small>Hijri date · Demo</small></span></div></div>
+<div class="dashboard-topbar"><label class="dashboard-search">⌕ <input id="dashboard-global-search" type="search" placeholder="Search Surah, Ayah, Hadith, Adhkar…"><kbd>⌘ K</kbd></label><button type="button" class="dashboard-location" id="dashboard-location-button">📍 <span><strong id="dashboard-city">Set location</strong><small id="dashboard-location-status">Choose your city</small></span></button><div class="dashboard-date">▦ <span><strong id="dashboard-date">Today</strong><small>Local date</small></span></div></div>
 <div class="dashboard-hero-grid">
 
         <!-- ============================================================
@@ -322,6 +322,17 @@
                 </div>
             </div>
         </section>
+        <aside class="dashboard-prayer-card" aria-label="Daily prayer times">
+            <span class="dashboard-prayer-kicker">☾ DAILY PRAYERS</span>
+            <h2 id="dashboard-prayer-heading">Prayer times</h2>
+            <p class="dashboard-prayer-intro" id="dashboard-prayer-intro">Set your city or allow location access to load today's prayer schedule.</p>
+            <div class="dashboard-prayer-list" id="dashboard-prayer-list">
+                <div><span>Fajr</span><strong>—</strong></div><div><span>Dhuhr</span><strong>—</strong></div><div><span>Asr</span><strong>—</strong></div><div><span>Maghrib</span><strong>—</strong></div><div><span>Isha</span><strong>—</strong></div>
+            </div>
+            <div class="dashboard-prayer-actions"><button type="button" id="dashboard-use-location">Use my location</button><button type="button" id="dashboard-choose-city">Choose city</button></div>
+            <p class="dashboard-demo-note" id="dashboard-prayer-status">Prayer times load after location is set.</p>
+        </aside>
+        </div>
 
         <!-- ============================================================
              DAILY REMINDER
@@ -417,6 +428,16 @@
                     </a>
                 </article>
 
+            </div>
+        </section>
+
+        <section class="dashboard-progress" aria-label="Daily shortcuts">
+            <div class="dashboard-progress-heading"><div><span class="eyebrow">YOUR DAILY PRACTICE</span><h2>Make today count</h2></div></div>
+            <div class="dashboard-progress-grid">
+                <a href="#quran" class="dashboard-progress-item"><span class="dashboard-progress-icon">📖</span><strong>Read Quran</strong><span>Continue reading</span></a>
+                <a href="#adhkar" class="dashboard-progress-item"><span class="dashboard-progress-icon">🤲</span><strong>Daily Adhkar</strong><span>Morning & evening</span></a>
+                <a href="#tasbeeh-tool" class="dashboard-progress-item"><span class="dashboard-progress-icon">📿</span><strong>Tasbeeh</strong><span>Open counter</span></a>
+                <a href="#routine" class="dashboard-progress-item"><span class="dashboard-progress-icon">✓</span><strong>My Routine</strong><span>View daily habits</span></a>
             </div>
         </section>
 
@@ -684,5 +705,53 @@
 
     <!-- Main application script — MUST stay as the last script -->
     <script src="./script.js"></script>
+<script>
+(function(){
+ const dateNode=document.getElementById("dashboard-date");
+ if(dateNode) dateNode.textContent=new Intl.DateTimeFormat("en-IN",{weekday:"short",day:"numeric",month:"short"}).format(new Date());
+ const cityNode=document.getElementById("dashboard-city"), locStatus=document.getElementById("dashboard-location-status"), heading=document.getElementById("dashboard-prayer-heading"), intro=document.getElementById("dashboard-prayer-intro"), list=document.getElementById("dashboard-prayer-list"), status=document.getElementById("dashboard-prayer-status");
+ async function loadPrayerTimes(city,country){
+   if(cityNode) cityNode.textContent=city;
+   if(locStatus) locStatus.textContent="Loading prayer times…";
+   if(heading) heading.textContent="Prayer times · "+city;
+   if(intro) intro.textContent="Fetching today's schedule.";
+   if(status) status.textContent="Source: AlAdhan prayer-times service";
+   try {
+     const url="https://api.aladhan.com/v1/timingsByCity?city="+encodeURIComponent(city)+"&country="+encodeURIComponent(country||"India")+"&method=1";
+     const response=await fetch(url);
+     if(!response.ok) throw new Error("Prayer service unavailable");
+     const payload=await response.json();
+     if(payload.code!==200||!payload.data||!payload.data.timings) throw new Error("Prayer times not available");
+     const t=payload.data.timings;
+     const names=[["Fajr",t.Fajr],["Dhuhr",t.Dhuhr],["Asr",t.Asr],["Maghrib",t.Maghrib],["Isha",t.Isha]];
+     if(list) list.innerHTML=names.map(([name,time])=>"<div><span>"+name+"</span><strong>"+String(time).replace(/\s*\(.*\)$/,"")+"</strong></div>").join("");
+     if(locStatus) locStatus.textContent="Prayer times loaded";
+     if(intro) intro.textContent="Today's timings for "+city+". Times may vary by calculation method.";
+     if(status) status.textContent="Calculated by AlAdhan · verify with your local mosque";
+   } catch(e) {
+     if(locStatus) locStatus.textContent="Could not load timings";
+     if(intro) intro.textContent="Prayer-time service is unavailable right now. Please try again later.";
+     if(status) status.textContent="No sample times shown";
+     if(list) list.innerHTML="<div><span>Fajr</span><strong>—</strong></div><div><span>Dhuhr</span><strong>—</strong></div><div><span>Asr</span><strong>—</strong></div><div><span>Maghrib</span><strong>—</strong></div><div><span>Isha</span><strong>—</strong></div>";
+   }
+ }
+ function chooseCity(){const value=window.prompt("Enter your city (for example, Bengaluru):");if(value&&value.trim())loadPrayerTimes(value.trim(),"India");}
+ const cityBtn=document.getElementById("dashboard-choose-city"), topBtn=document.getElementById("dashboard-location-button"), geoBtn=document.getElementById("dashboard-use-location");
+ if(cityBtn)cityBtn.addEventListener("click",chooseCity);if(topBtn)topBtn.addEventListener("click",chooseCity);
+ if(geoBtn)geoBtn.addEventListener("click",function(){
+   if(!navigator.geolocation){chooseCity();return;}
+   if(status)status.textContent="Requesting location permission…";
+   navigator.geolocation.getCurrentPosition(async pos=>{
+     try{
+       const url="https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+pos.coords.latitude+"&longitude="+pos.coords.longitude+"&localityLanguage=en";
+       const res=await fetch(url);const data=await res.json();const city=data.city||data.locality||data.principalSubdivision;
+       if(city)loadPrayerTimes(city,data.countryName||"India");else chooseCity();
+     }catch(e){chooseCity();}
+   },()=>chooseCity(),{timeout:10000});
+ });
+ const search=document.getElementById("dashboard-global-search");
+ if(search)search.addEventListener("keydown",e=>{if(e.key!=="Enter"||!search.value.trim())return;const q=search.value.trim().toLowerCase();const map=[["quran","quran"],["ayah","quran"],["surah","quran"],["adhkar","adhkar"],["tasbeeh","tasbeeh-tool"],["hadith","hadith-library"],["routine","routine"],["bookmark","bookmarks"]].find(x=>q.includes(x[0]));const target=document.getElementById(map?map[1]:"quran");if(target)target.scrollIntoView({behavior:"smooth"});});
+})();
+</script>
 </body>
 </html>
