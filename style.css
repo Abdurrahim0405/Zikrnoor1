@@ -2120,3 +2120,54 @@ body[data-view="nearby-masjid"] #nearby-masjid { display:block; max-width:1080px
  .masjid-result-main h4 { font-size:18px; }
  .masjid-directions-button { width:100%; }
 }
+
+
+/* Footer layout fix: compact, aligned and readable on wide laptop screens. */
+body[data-view="home"] footer.site-footer {
+  display:grid;
+  grid-template-columns:minmax(130px,.7fr) minmax(150px,.9fr) minmax(250px,1.4fr) minmax(200px,1.1fr);
+  align-items:center;
+  justify-items:start;
+  gap:14px 28px;
+  margin:0;
+  padding:28px clamp(20px,3vw,44px);
+  text-align:left;
+  border-top:1px solid #28513f;
+}
+body[data-view="home"] footer.site-footer::before { left:0;transform:none;width:100%;opacity:.18; }
+body[data-view="home"] footer.site-footer .footer-brand { color:var(--gold);font:700 25px Georgia,serif;text-decoration:none; }
+body[data-view="home"] footer.site-footer > p { margin:0;line-height:1.6; }
+body[data-view="home"] footer.site-footer .footer-nav { display:flex;justify-content:flex-start;align-items:center;gap:8px 16px;margin:0;padding:0; }
+body[data-view="home"] footer.site-footer .footer-nav a { white-space:nowrap;color:var(--muted);text-decoration:none;font-size:12px; }
+body[data-view="home"] footer.site-footer .footer-nav a:hover { color:var(--gold); }
+body[data-view="home"] footer.site-footer .footer-note { max-width:220px; }
+body[data-view="home"] footer.site-footer .footer-meta { justify-content:flex-start;flex-wrap:wrap;gap:7px;margin:0;font-size:11px; }
+body[data-view="home"] footer.contact-footer {
+  display:grid;
+  grid-template-columns:minmax(130px,.7fr) minmax(250px,1.3fr) minmax(190px,1fr) minmax(220px,1.1fr);
+  align-items:center;
+  gap:18px 24px;
+  margin:0;
+  padding:22px clamp(20px,3vw,44px);
+  border-top:1px solid #1c3e30;
+  background:rgba(3,15,11,.55);
+}
+body[data-view="home"] .contact-footer-title h2 { margin:4px 0 0;font:24px Georgia,serif; }
+body[data-view="home"] .contact-footer-link { min-width:0; }
+body[data-view="home"] .contact-footer-link > span:last-child { overflow-wrap:anywhere; }
+body[data-view="home"] .contact-footer-love { min-width:0; }
+@media(max-width:1200px) {
+ body[data-view="home"] footer.site-footer { grid-template-columns:minmax(120px,.6fr) minmax(160px,1fr);gap:14px 24px; }
+ body[data-view="home"] footer.site-footer .footer-nav { grid-column:1 / -1;flex-wrap:wrap; }
+ body[data-view="home"] footer.site-footer .footer-note { max-width:none; }
+ body[data-view="home"] footer.site-footer .footer-meta { grid-column:1 / -1; }
+ body[data-view="home"] footer.contact-footer { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:760px) {
+ body[data-view="home"] footer.site-footer { grid-template-columns:minmax(0,1fr);gap:12px;padding:24px 18px; }
+ body[data-view="home"] footer.site-footer .footer-nav,
+ body[data-view="home"] footer.site-footer .footer-meta { grid-column:auto; }
+ body[data-view="home"] footer.site-footer .footer-nav { gap:10px 14px; }
+ body[data-view="home"] footer.contact-footer { grid-template-columns:minmax(0,1fr);gap:14px;padding:20px 18px; }
+ body[data-view="home"] .contact-footer-love { border-left:0;border-top:1px solid #28513f;padding:14px 0 0; }
+}
