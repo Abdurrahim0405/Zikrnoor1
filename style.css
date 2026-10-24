@@ -2546,7 +2546,10 @@ body[data-view="quran"] #quran [data-bookmark-verse] {
   background:#0b3023;
   color:#e8c36b;
   padding:9px 12px;
-  font:600 12px/1.4 inherit;
+  font-family:inherit;
+  font-size:12px;
+  font-weight:600;
+  line-height:1.4;
   cursor:pointer;
 }
 body[data-view="quran"] #quran button:hover,
