@@ -1004,7 +1004,7 @@
   const listStatus=document.getElementById("masjid-list-status"), resultsNode=document.getElementById("masjid-results");
   const countNode=document.getElementById("masjid-result-count"), radiusSelect=document.getElementById("masjid-radius");
   const detectButton=document.getElementById("masjid-detect"), refreshButton=document.getElementById("masjid-refresh");
-  let masjidCoordinates=null, searchInProgress=false, lastSearchKey="";
+  let masjidCoordinates=null, searchInProgress=false, pendingSearch=false, lastSearchKey="";
   const mapsSearch="https://www.google.com/maps/search/?api=1&query=";
   function distanceKm(lat1,lon1,lat2,lon2){
    const rad=value=>value*Math.PI/180, dLat=rad(lat2-lat1),dLon=rad(lon2-lon1);
@@ -1044,7 +1044,8 @@
    }).join("");
   }
   async function loadNearbyMasjids(force=false){
-   if(!masjidCoordinates||searchInProgress)return;
+   if(!masjidCoordinates)return;
+   if(searchInProgress){pendingSearch=true;return;}
    const radius=Number(radiusSelect&&radiusSelect.value||3000),key=masjidCoordinates.lat.toFixed(4)+","+masjidCoordinates.lon.toFixed(4)+":"+radius;
    if(!force&&key===lastSearchKey)return;
    searchInProgress=true;lastSearchKey=key;
@@ -1066,7 +1067,7 @@
     if(countNode)countNode.textContent="Unavailable";
     if(resultsNode)resultsNode.innerHTML='<div class="masjid-empty"><strong>Could not load the masjid list right now.</strong><span>The map-data service may be busy. Please try Refresh list or use Google Maps.</span><a class="masjid-action secondary" href="'+mapsSearch+encodeURIComponent("mosque near "+lat+","+lon)+'" target="_blank" rel="noopener noreferrer">Open Google Maps ↗</a></div>';
     if(listStatus)listStatus.textContent="Unable to reach the map-data service. Your location is available; try again shortly.";
-   }finally{searchInProgress=false;}
+   }finally{searchInProgress=false;if(pendingSearch){pendingSearch=false;loadNearbyMasjids(true);}}
   }
   async function masjidIpFallback(){
    try{
