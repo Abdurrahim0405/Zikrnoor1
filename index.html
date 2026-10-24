@@ -265,6 +265,7 @@
         <a href="#hadith-library">▤ &nbsp; Hadith</a>
         <a href="#dashboard-prayer-card">◷ &nbsp; Prayer Times</a>
         <a href="#qibla">⌖ &nbsp; Qibla</a>
+        <a href="#nearby-masjid">☾ &nbsp; Nearby Masjid</a>
         <a href="#dashboard-islamic-date">▦ &nbsp; Islamic Calendar</a>
         <a href="#routine">☑ &nbsp; My Routine</a>
         <a href="#bookmarks">♧ &nbsp; Bookmarks</a>
@@ -473,6 +474,38 @@
         </section>
 
 
+
+        <!-- NEARBY MASJIDS -->
+        <section class="app-section nearby-masjid-view" id="nearby-masjid">
+            <a class="reader-back-link" href="#home">← Back to Home</a>
+            <span class="eyebrow">YOUR LOCAL COMMUNITY</span>
+            <h2>Nearby Masjids</h2>
+            <p>Find mosques around you and get directions with Google Maps.</p>
+            <div class="nearby-masjid-hero">
+                <div class="nearby-masjid-location-icon">☾</div>
+                <div class="nearby-masjid-location-copy">
+                    <span class="dashboard-prayer-kicker">YOUR LOCATION</span>
+                    <h3 id="masjid-location">Detecting your location…</h3>
+                    <p id="masjid-status" aria-live="polite">Trying to locate you automatically.</p>
+                </div>
+                <button type="button" class="masjid-action" id="masjid-detect">Detect my location</button>
+            </div>
+            <div class="nearby-masjid-cards">
+                <article class="nearby-masjid-card">
+                    <span class="nearby-masjid-card-icon">⌖</span>
+                    <h3>Masjids near me</h3>
+                    <p>See nearby mosques on Google Maps, with available place details and reviews.</p>
+                    <a class="masjid-action" id="masjid-google-search" href="https://www.google.com/maps/search/mosque+near+me" target="_blank" rel="noopener noreferrer">Find nearby masjids <span>↗</span></a>
+                </article>
+                <article class="nearby-masjid-card">
+                    <span class="nearby-masjid-card-icon">➤</span>
+                    <h3>Directions to a masjid</h3>
+                    <p>Choose a mosque in Google Maps and start walking or driving directions.</p>
+                    <a class="masjid-action secondary" id="masjid-directions" href="https://www.google.com/maps/search/mosque+near+me" target="_blank" rel="noopener noreferrer">Open Google Maps <span>↗</span></a>
+                </article>
+            </div>
+            <p class="nearby-masjid-note">Google Maps provides the latest place listings and directions. Location access helps centre the search around you; if unavailable, you can still search manually in Google Maps.</p>
+        </section>
 
         <!-- QIBLA COMPASS -->
         <section class="app-section qibla-view" id="qibla">
@@ -917,6 +950,60 @@
   if(compassButton)compassButton.addEventListener("click",enableCompass);
   window.addEventListener("hashchange",()=>{if(location.hash==="#qibla")detectQiblaLocation();});
   if(location.hash==="#qibla"||!location.hash)detectQiblaLocation();
+ }
+ const masjidSection=document.getElementById("nearby-masjid");
+ if(masjidSection){
+  const locationNode=document.getElementById("masjid-location"), statusNode=document.getElementById("masjid-status");
+  const searchLink=document.getElementById("masjid-google-search"), directionsLink=document.getElementById("masjid-directions");
+  function updateMapsLinks(lat,lon){
+   const query="mosque near "+lat+","+lon;
+   const url="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(query);
+   if(searchLink)searchLink.href=url;
+   if(directionsLink)directionsLink.href=url;
+  }
+  async function detectMasjidLocation(){
+   if(locationNode)locationNode.textContent="Finding your location…";
+   if(statusNode)statusNode.textContent="Requesting location permission.";
+   if(!navigator.geolocation){await masjidIpFallback();return;}
+   navigator.geolocation.getCurrentPosition(async pos=>{
+    const lat=pos.coords.latitude,lon=pos.coords.longitude;
+    updateMapsLinks(lat,lon);
+    if(locationNode)locationNode.textContent="Your current location";
+    if(statusNode)statusNode.textContent="Location detected. Google Maps will search around you.";
+    try{
+     const response=await fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude="+lat+"&longitude="+lon+"&localityLanguage=en");
+     if(response.ok){
+      const data=await response.json();
+      const city=data.city||data.locality||data.principalSubdivision;
+      if(city&&locationNode)locationNode.textContent=city+(data.countryName?", "+data.countryName:"");
+     }
+    }catch(e){}
+   },async ()=>{
+    if(statusNode)statusNode.textContent="Precise location is unavailable. Trying approximate location…";
+    await masjidIpFallback();
+   },{enableHighAccuracy:true,timeout:12000,maximumAge:300000});
+  }
+  async function masjidIpFallback(){
+   try{
+    const response=await fetch("https://ipapi.co/json/");
+    if(!response.ok)throw new Error("Approximate location unavailable");
+    const data=await response.json();
+    if(typeof data.latitude!=="number"||typeof data.longitude!=="number")throw new Error("Coordinates unavailable");
+    updateMapsLinks(data.latitude,data.longitude);
+    if(locationNode)locationNode.textContent=[data.city,data.country_name].filter(Boolean).join(", ")||"Approximate location";
+    if(statusNode)statusNode.textContent="Approximate location detected. Allow precise location for a closer search.";
+   }catch(e){
+    if(locationNode)locationNode.textContent="Location unavailable";
+    if(statusNode)statusNode.textContent="You can still open Google Maps and search for “mosque near me”.";
+    const fallback="https://www.google.com/maps/search/mosque+near+me";
+    if(searchLink)searchLink.href=fallback;
+    if(directionsLink)directionsLink.href=fallback;
+   }
+  }
+  const detectButton=document.getElementById("masjid-detect");
+  if(detectButton)detectButton.addEventListener("click",detectMasjidLocation);
+  window.addEventListener("hashchange",()=>{if(location.hash==="#nearby-masjid")detectMasjidLocation();});
+  if(location.hash==="#nearby-masjid")detectMasjidLocation();
  }
  const search=document.getElementById("dashboard-global-search");
  if(search)search.addEventListener("keydown",e=>{
