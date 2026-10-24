@@ -2368,3 +2368,125 @@ body[data-view="home"] .feature-card:hover .card-link span { transform:translate
  body[data-view="home"] .dashboard-action-card,body[data-view="home"] .feature-card,
  body[data-view="home"] .dashboard-hero-grid .primary-button { transition:none; }
 }
+
+
+/* Reference-led Zikrnoor dashboard composition */
+body[data-view="home"] .dashboard-hero-grid { display:grid;grid-template-columns:minmax(0,1fr);margin-bottom:16px; }
+body[data-view="home"] .dashboard-hero-grid .welcome {
+ position:relative;isolation:isolate;overflow:hidden;min-height:285px;padding:36px 34px;
+ border-radius:18px;border:1px solid #275b45;
+ background:radial-gradient(ellipse at 65% 35%,rgba(188,142,55,.14),transparent 34%),linear-gradient(110deg,#08271d 0%,#0a2c20 48%,#071a13 100%);
+}
+body[data-view="home"] .dashboard-hero-grid .welcome:after {
+ content:"";position:absolute;z-index:-1;inset:0;
+ background:linear-gradient(90deg,rgba(3,20,14,.04) 0%,rgba(3,20,14,.08) 50%,rgba(3,20,14,.45) 100%);
+ pointer-events:none;
+}
+body[data-view="home"] .dashboard-hero-grid .welcome h1 { position:relative;z-index:2;max-width:58%;font-size:clamp(38px,3.2vw,52px);line-height:1.02;margin:15px 0 10px; }
+body[data-view="home"] .dashboard-hero-grid .welcome>p { position:relative;z-index:2;max-width:55%;margin-bottom:16px; }
+body[data-view="home"] .dashboard-hero-grid .welcome .primary-button,
+body[data-view="home"] .dashboard-hero-grid .welcome .hero-proofs { position:relative;z-index:2; }
+body[data-view="home"] .dashboard-hero-verse {
+ position:absolute;z-index:3;right:24px;top:24px;bottom:24px;width:190px;
+ display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+ padding:18px 15px;border:1px solid rgba(222,183,99,.27);border-radius:13px;
+ background:linear-gradient(150deg,rgba(4,24,17,.77),rgba(4,20,14,.93));
+ box-shadow:0 12px 35px rgba(0,0,0,.15);
+}
+body[data-view="home"] .hero-verse-arabic { color:#eac56c;font:46px/1.2 Georgia,serif; }
+body[data-view="home"] .dashboard-hero-verse p { margin:14px 0 12px;color:#d8caa8;font:16px/1.55 Georgia,serif; }
+body[data-view="home"] .dashboard-hero-verse small { color:#e9c16a;font-size:11px; }
+body[data-view="home"] .dashboard-utility-grid {
+ display:grid;grid-template-columns:minmax(0,2.15fr) minmax(180px,.78fr) minmax(220px,.95fr);
+ align-items:stretch;gap:12px;margin:0 0 16px;
+}
+body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-card { border-radius:16px;padding:20px 17px; }
+body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-card h2 { font-size:24px; }
+body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-intro { margin:5px 0 10px; }
+body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-list { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:10px 0 14px; }
+body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-list div {
+ display:flex;flex-direction:column;justify-content:center;gap:8px;min-width:0;min-height:83px;
+ padding:10px 7px;border:1px solid #244b39;border-radius:10px;background:rgba(2,21,14,.3);text-align:center;
+}
+body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-list div span { font-size:11px; }
+body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-list strong { font-size:13px; }
+body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-actions { grid-template-columns:1fr 1fr; }
+body[data-view="home"] .dashboard-qibla-preview,body[data-view="home"] .dashboard-masjid-preview {
+ display:flex;flex-direction:column;min-width:0;padding:18px 15px;border-radius:16px;
+}
+body[data-view="home"] .dashboard-qibla-preview .dashboard-panel-heading,
+body[data-view="home"] .dashboard-masjid-preview .dashboard-panel-heading { margin-bottom:12px; }
+body[data-view="home"] .dashboard-qibla-preview .dashboard-panel-heading h2,
+body[data-view="home"] .dashboard-masjid-preview .dashboard-panel-heading h2 { font-size:17px; }
+body[data-view="home"] .dashboard-qibla-preview .dashboard-panel-heading>a,
+body[data-view="home"] .dashboard-masjid-preview .dashboard-panel-heading>a { font-size:10px; }
+body[data-view="home"] .qibla-preview-compass {
+ position:relative;display:grid;place-items:center;width:min(100%,170px);aspect-ratio:1;margin:5px auto 12px;
+ border:1px solid #927944;border-radius:50%;
+ background:repeating-radial-gradient(circle,transparent 0 24px,rgba(206,171,92,.16) 25px 26px),radial-gradient(circle,#0a3225,#04180f 72%);
+ box-shadow:inset 0 0 0 7px rgba(214,174,87,.045),0 0 25px rgba(0,0,0,.15);
+}
+body[data-view="home"] .qibla-preview-compass:before,body[data-view="home"] .qibla-preview-compass:after { content:"";position:absolute;background:rgba(207,174,103,.28); }
+body[data-view="home"] .qibla-preview-compass:before { width:1px;height:85%; }
+body[data-view="home"] .qibla-preview-compass:after { height:1px;width:85%; }
+body[data-view="home"] .qibla-preview-compass span { position:absolute;color:#d8c18b;font-size:10px; }
+body[data-view="home"] .qibla-preview-compass .compass-n { top:9px; }
+body[data-view="home"] .qibla-preview-compass .compass-e { right:10px; }
+body[data-view="home"] .qibla-preview-compass .compass-s { bottom:9px; }
+body[data-view="home"] .qibla-preview-compass .compass-w { left:10px; }
+body[data-view="home"] .qibla-preview-compass .compass-needle { position:absolute;width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-bottom:48px solid #eac46a;transform:rotate(45deg) translateY(-6px);filter:drop-shadow(0 0 7px rgba(234,196,106,.25)); }
+body[data-view="home"] .qibla-preview-compass b { position:relative;z-index:1;display:grid;place-items:center;width:27px;height:27px;border:1px solid #c8a85e;border-radius:50%;background:#08251a;color:#e9c56e;font-size:13px; }
+body[data-view="home"] .dashboard-qibla-preview>p { color:var(--muted);font-size:11px;line-height:1.6;text-align:center;margin:0 0 12px; }
+body[data-view="home"] .qibla-preview-button { display:flex;align-items:center;justify-content:center;gap:10px;margin-top:auto;padding:11px 12px;border-radius:9px;font-size:12px;text-decoration:none; }
+body[data-view="home"] .dashboard-masjid-preview { background:linear-gradient(150deg,#0b2b20,#061810); }
+body[data-view="home"] .masjid-preview-subtitle { margin:0 0 8px;color:var(--muted);font-size:11px;line-height:1.5; }
+body[data-view="home"] .masjid-preview-illustration {
+ position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;min-height:125px;margin:4px 0 12px;
+ border:1px solid #244b39;border-radius:12px;
+ background:radial-gradient(ellipse at 50% 100%,rgba(219,177,89,.17),transparent 56%),linear-gradient(180deg,#0b3024,#06180f);
+}
+body[data-view="home"] .masjid-preview-illustration>span { position:absolute;top:7px;right:13px;color:#eac56c;font-size:25px; }
+body[data-view="home"] .mini-mosque { position:relative;width:75%;height:76px;border-bottom:2px solid #987d46;background:linear-gradient(180deg,transparent 0 25%,rgba(214,177,98,.1) 25%); }
+body[data-view="home"] .mini-mosque:before { content:"";position:absolute;left:25%;right:25%;top:18px;height:55px;border:1px solid #b18d4b;border-bottom:0;border-radius:40px 40px 0 0;background:linear-gradient(90deg,rgba(220,182,94,.03),rgba(220,182,94,.14),rgba(220,182,94,.03)); }
+body[data-view="home"] .mini-mosque:after { content:"";position:absolute;left:37%;top:8px;width:26%;height:25px;border:1px solid #c6a45a;border-radius:50% 50% 0 0;background:#0a2b1e; }
+body[data-view="home"] .mini-mosque i { position:absolute;bottom:0;width:9px;height:58px;border:1px solid #a9884c;border-bottom:0;background:#0b2b1e; }
+body[data-view="home"] .mini-mosque i:before { content:"";position:absolute;top:-11px;left:-3px;width:13px;height:13px;border:1px solid #c5a358;border-radius:50% 50% 0 0; }
+body[data-view="home"] .mini-mosque i:nth-child(1) { left:0; }
+body[data-view="home"] .mini-mosque i:nth-child(2) { right:0; }
+body[data-view="home"] .mini-mosque i:nth-child(3) { left:50%;height:38px;width:6px; }
+body[data-view="home"] .mini-mosque b { position:absolute;z-index:2;left:43%;bottom:0;width:14%;height:38px;border:1px solid #c6a45a;border-bottom:0;border-radius:18px 18px 0 0; }
+body[data-view="home"] .masjid-preview-footer { display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;color:#d9b45f;font-size:11px; }
+body[data-view="home"] .masjid-preview-footer .dashboard-round-link { flex-basis:28px;width:28px;height:28px; }
+body[data-view="home"] .masjid-preview-link { display:flex;align-items:center;justify-content:center;gap:10px;margin-top:auto;padding:11px;border:1px solid #8b713f;border-radius:9px;background:linear-gradient(100deg,#d4a14d,#f2ce82);color:#102219;font-size:12px;font-weight:700;text-decoration:none; }
+body[data-view="home"] .masjid-preview-link:hover { filter:brightness(1.05); }
+@media(max-width:1250px) {
+ body[data-view="home"] .dashboard-utility-grid { grid-template-columns:minmax(0,1.7fr) minmax(170px,.8fr); }
+ body[data-view="home"] .dashboard-masjid-preview { grid-column:1/-1; }
+ body[data-view="home"] .dashboard-masjid-preview .masjid-preview-illustration { min-height:95px; }
+}
+@media(max-width:900px) {
+ body[data-view="home"] .dashboard-hero-grid .welcome { min-height:330px; }
+ body[data-view="home"] .dashboard-utility-grid { grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+ body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-card { grid-column:1/-1; }
+ body[data-view="home"] .dashboard-masjid-preview { grid-column:auto; }
+ body[data-view="home"] .dashboard-hero-verse { width:155px;right:18px; }
+ body[data-view="home"] .dashboard-hero-grid .welcome h1,body[data-view="home"] .dashboard-hero-grid .welcome>p { max-width:calc(100% - 170px); }
+}
+@media(max-width:600px) {
+ body[data-view="home"] .dashboard-hero-grid .welcome { min-height:390px;padding:24px 19px 180px; }
+ body[data-view="home"] .dashboard-hero-grid .welcome h1,body[data-view="home"] .dashboard-hero-grid .welcome>p { max-width:100%; }
+ body[data-view="home"] .dashboard-hero-verse { top:auto;left:18px;right:18px;bottom:16px;width:auto;min-height:125px;padding:12px; }
+ body[data-view="home"] .hero-verse-arabic { font-size:30px; }
+ body[data-view="home"] .dashboard-hero-verse p { margin:6px 0;font-size:13px; }
+ body[data-view="home"] .dashboard-utility-grid { grid-template-columns:minmax(0,1fr); }
+ body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-card,body[data-view="home"] .dashboard-masjid-preview { grid-column:auto; }
+ body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-list div { min-height:70px;padding:8px 3px; }
+ body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-list div span { font-size:10px; }
+ body[data-view="home"] .dashboard-utility-grid .dashboard-prayer-list strong { font-size:11px; }
+ body[data-view="home"] .dashboard-qibla-preview,body[data-view="home"] .dashboard-masjid-preview { padding:18px; }
+}
+
+body[data-view="home"] .hero-mosque-art { position:absolute;z-index:0;right:155px;bottom:0;width:min(58%,680px);height:100%;opacity:.9;pointer-events:none;filter:drop-shadow(0 0 25px rgba(218,173,82,.08)); }
+body[data-view="home"] .dashboard-hero-grid .welcome .hero-orbs { z-index:0;pointer-events:none; }
+@media(max-width:900px) { body[data-view="home"] .hero-mosque-art { right:125px;width:60%;opacity:.7; } }
+@media(max-width:600px) { body[data-view="home"] .hero-mosque-art { right:0;bottom:110px;width:100%;height:55%;opacity:.36; } }
