@@ -17,7 +17,7 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23091b19'/%3E%3Cpath d='M42 12a21 21 0 1 0 10 37A23 23 0 0 1 42 12Z' fill='%23e4bd73'/%3E%3Cpath d='M18 47h28M22 43V29l10-8 10 8v14M28 43V33h8v10' fill='none' stroke='%23e4bd73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23091b19'/%3E%3Cpath d='M42 12a21 21 0 1 0 10 37A23 23 0 0 1 42 12Z' fill='%23e4bd73'/%3E%3Cpath d='M18 47h28M22 43V29l10-8 10 8v14M28 43V33h8v10' fill='none' stroke='%23e4bd73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
-    <link rel="stylesheet" href="./style.css">
+
 
     <!-- =================================================================
          ENHANCEMENT STYLES — self-contained.
@@ -245,6 +245,7 @@
             }
         }
     </style>
+    <link rel="stylesheet" href="./frontend.css">
 </head>
 
 <body data-view="home">
@@ -290,24 +291,24 @@
 
     <!-- HEADER -->
     <header class="site-header" id="home">
-        <a href="#home" class="brand">Zikrnoor</a>
+        <a href="#home" class="brand"><span class="brand-mark" aria-hidden="true">۞</span><span>Zikrnoor</span></a>
         <p>Your daily spiritual companion</p>
     </header>
 
     <!-- NAVIGATION -->
     <nav class="navbar" aria-label="Main navigation">
-        <a href="#home">⌂ &nbsp; Home</a>
-        <a class="active" href="#quran">▤ &nbsp; Quran</a>
-        <a href="#adhkar">♧ &nbsp; Daily Adhkar</a>
-        <a href="#tasbeeh-tool">◉ &nbsp; Tasbeeh</a>
-        <a href="#hadith-library">▤ &nbsp; Hadith</a>
-        <a href="#dashboard-prayer-card">◷ &nbsp; Prayer Times</a>
-        <a href="#qibla">⌖ &nbsp; Qibla</a>
-        <a href="#nearby-masjid">☾ &nbsp; Nearby Masjid</a>
-        <a href="#dashboard-islamic-date">▦ &nbsp; Islamic Calendar</a>
-        <a href="#routine">☑ &nbsp; My Routine</a>
-        <a href="#bookmarks">♧ &nbsp; Bookmarks</a>
-        <a href="#settings">⚙ &nbsp; Settings</a>
+        <a href="#home"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5M5.5 9.5V21h13V9.5M9.5 21v-7h5v7"/></svg><span>Home</span></a>
+        <a href="#quran"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5h11.5L20 7v13.5H5zM16.5 3.5V7H20M8 11h9M8 14.5h9M8 18h6"/></svg><span>Quran</span></a>
+        <a href="#adhkar"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-4.6-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6.4-8 11-8 11z"/></svg><span>Daily Adhkar</span></a>
+        <a href="#tasbeeh-tool"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2"/></svg><span>Tasbeeh</span></a>
+        <a href="#hadith-library"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4.5h16v15H4zM8 8h8M8 12h8M8 16h5"/></svg><span>Hadith</span></a>
+        <a href="#dashboard-prayer-card"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4M12 8v4l3 2"/></svg><span>Prayer Times</span></a>
+        <a href="#qibla"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4.5 20l7.5-4 7.5 4L12 2zM12 8v4"/></svg><span>Qibla</span></a>
+        <a href="#nearby-masjid"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20v-7l7-5 7 5v7M9 20v-5h6v5M12 8V4m-2 2 2-2 2 2"/></svg><span>Nearby Masjid</span></a>
+        <a href="#dashboard-islamic-date"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v16H4zM8 3v4M16 3v4M4 10h16M8 14h2M13 14h3"/></svg><span>Islamic Calendar</span></a>
+        <a href="#routine"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5h12M8 12h12M8 19h12M3 5l1 1 2-2M3 12l1 1 2-2M3 19l1 1 2-2"/></svg><span>My Routine</span></a>
+        <a href="#bookmarks"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"/></svg><span>Bookmarks</span></a>
+        <a href="#settings"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zM19 13.5l2 1.2-2 3.5-2.2-.8a8 8 0 0 1-2 1.2L14.5 21h-5L9 18.6a8 8 0 0 1-2-1.2l-2.2.8-2-3.5 2-1.2a8 8 0 0 1 0-2.3l-2-1.2 2-3.5 2.2.8a8 8 0 0 1 2-1.2L9.5 4h5l.3 2.4a8 8 0 0 1 2 1.2l2.2-.8 2 3.5-2 1.2a8 8 0 0 1 0 2z"/></svg><span>Settings</span></a>
     </nav>
 
     <main class="container" id="main-content">
