@@ -390,3 +390,77 @@ body:not([data-view="home"]):not([data-view="hadith-library"]) .hadith-sources{d
 .adhkar-card>a{display:inline-block;margin-top:12px;color:var(--gold);font-size:10px}
 .bookmark-btn:hover,.adhkar-actions button:hover,.hadith-actions button:hover{background:rgba(214,177,105,.18)}
 button:disabled{opacity:.55;cursor:not-allowed}
+
+
+/* Mobile-first refinement: compact header, usable navigation and touch-friendly layouts */
+@media (max-width: 760px) {
+  html { scroll-padding-top: 14px; }
+  body { min-width: 320px; padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+  .site-header { margin: 8px 10px 0; padding: 12px 15px; min-height: 62px; flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; border-radius: 16px; }
+  .brand { font-size: 25px; gap: 8px; }
+  .site-header p { margin: 0; max-width: 116px; text-align: right; font-size: 8px; line-height: 1.35; letter-spacing: 1px; }
+  .navbar { position: sticky; top: 0; z-index: 45; margin: 8px 10px 0; padding: 7px; gap: 6px; border: 1px solid var(--line); border-radius: 14px; background: rgba(5,20,23,.96); box-shadow: 0 8px 24px rgba(0,0,0,.24); backdrop-filter: blur(18px); overscroll-behavior-x: contain; }
+  .navbar a { min-height: 42px; padding: 9px 12px; gap: 7px; border-radius: 10px; font-size: 11px; }
+  .navbar a.active { border-color: rgba(218,183,116,.32); }
+  .container { width: auto; max-width: none; margin: 10px 10px 24px; padding: 0 0 24px; min-height: 0; }
+  .dashboard-topbar { position: relative; top: auto; grid-template-columns: minmax(0,1fr) minmax(0,1fr); margin-bottom: 12px; }
+  .dashboard-search { min-width: 0; }
+  .dashboard-search kbd { display: none; }
+  .dashboard-location, .dashboard-date { min-width: 0; }
+  .dashboard-location span, .dashboard-date span { min-width: 0; }
+  .dashboard-location strong, .dashboard-date strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .welcome { gap: 0; }
+  .home-ayah-heading { max-width: 100%; line-height: 1.12; }
+  .hero-proofs { gap: 6px; }
+  .hero-proof { font-size: 9px; }
+  .dashboard-utility-grid, .dashboard-main-grid, .dashboard-inspiration-grid, .qibla-layout, .hadith-grid, .masjid-results { grid-template-columns: minmax(0,1fr); }
+  .dashboard-quick-actions { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .dashboard-action-card { min-width: 0; }
+  .dashboard-panel, .dashboard-prayer-card, .feature-card, .daily-card { min-width: 0; }
+  .app-section { width: 100%; min-width: 0; padding: 20px 14px; margin-left: 0; margin-right: 0; overflow-wrap: anywhere; }
+  .app-section > h2 { font-size: clamp(29px,8vw,36px); }
+  .quran-tools, .hadith-toolbar, .adhkar-controls, .hadith-filters, .nearby-masjid-tools { gap: 8px; }
+  input[type="search"], input[type="text"], select, button { max-width: 100%; }
+  .quran-card, .ayah-card, .adhkar-card, .hadith-card, .result-card { padding: 15px; }
+  .quran-ayah { padding: 16px 13px; }
+  .quran-arabic, .ayah-arabic, .adhkar-arabic { overflow-wrap: anywhere; }
+  .nearby-masjid-hero { display: grid; grid-template-columns: 48px minmax(0,1fr); gap: 12px; }
+  .nearby-masjid-location-icon { width: 48px; height: 48px; }
+  .nearby-masjid-location-copy { min-width: 0; }
+  .nearby-masjid-hero .masjid-action { grid-column: 2; margin: 0; justify-self: start; }
+  .masjid-result-card { align-items: flex-start; flex-wrap: wrap; }
+  .masjid-directions-button { margin-left: 42px; }
+  .qibla-compass { width: min(290px, 78vw); }
+  .tasbeeh-panel { width: 100%; padding: 19px 14px; }
+  .count-button { min-height: 62px; width: 100%; touch-action: manipulation; }
+  .routine-list label { min-height: 44px; }
+  .site-footer, .contact-footer { margin-left: 10px; margin-right: 10px; }
+  .back-to-top { right: 14px; bottom: max(14px, env(safe-area-inset-bottom)); width: 42px; height: 42px; }
+  .revelation-scene { min-height: 100svh; min-height: 100dvh; }
+}
+@media (max-width: 420px) {
+  .site-header { align-items: flex-start; flex-direction: column; gap: 4px; }
+  .site-header p { max-width: none; text-align: left; }
+  .navbar { margin-top: 7px; }
+  .navbar a { min-height: 40px; padding: 8px 10px; font-size: 10px; }
+  .container { margin-left: 8px; margin-right: 8px; }
+  .dashboard-topbar { padding: 8px; }
+  .dashboard-location, .dashboard-date { gap: 6px; padding: 6px 7px; }
+  .dashboard-location strong, .dashboard-date strong { font-size: 10px; }
+  .dashboard-location small, .dashboard-date small { font-size: 9px; }
+  .dashboard-quick-actions { gap: 7px; }
+  .dashboard-action-card { padding: 10px 8px; }
+  .dashboard-action-card i { display: none; }
+  .app-section { padding: 18px 12px; }
+  .nearby-masjid-tools > * { max-width: 100%; }
+  .contact-footer { gap: 12px; }
+}
+@media (max-width: 360px) {
+  .dashboard-quick-actions { grid-template-columns: 1fr; }
+  .dashboard-topbar { grid-template-columns: 1fr; }
+  .dashboard-search { grid-column: 1; }
+  .home-ayah-heading { font-size: 29px; }
+}
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 900px) {
+  .revelation-scene { min-height: 620px; }
+}
