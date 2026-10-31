@@ -245,21 +245,14 @@
     </style>
 </head>
 
-<body data-view="home">\n\n    <!-- CINEMATIC INTRO: a respectful typographic presentation of the first revealed ayah -->
-    <div class="zikr-intro" id="zikr-intro" aria-label="Zikrnoor introduction" aria-hidden="false">
-      <div class="intro-sky" aria-hidden="true"><span class="intro-star star-one"></span><span class="intro-star star-two"></span><span class="intro-star star-three"></span><span class="intro-horizon"></span><span class="intro-mosque"><i></i><b></b><em></em></span></div>
-      <div class="intro-content">
-        <span class="intro-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
-        <span class="intro-kicker">THE FIRST REVELATION</span>
-        <div class="intro-ayah" lang="ar" dir="rtl">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</div>
-        <p class="intro-translation">“Read in the name of your Lord who created.”</p>
-        <span class="intro-reference">Surah Al-‘Alaq · 96:1</span>
-      </div>
-      <div class="intro-bottom"><span class="intro-line"></span><span>LET THE LIGHT OF KNOWLEDGE BEGIN</span><span class="intro-line"></span></div>
-      <button class="intro-skip" id="intro-skip" type="button">Skip intro <span aria-hidden="true">↗</span></button>
+<body data-view="home">
+
+    <!-- Persistent cinematic atmosphere (not a blocking intro) -->
+    <div class="site-atmosphere" aria-hidden="true">
+      <span class="atmosphere-star star-a"></span><span class="atmosphere-star star-b"></span><span class="atmosphere-star star-c"></span>
+      <span class="atmosphere-horizon"></span>
+      <div class="atmosphere-mosque"><i></i><b></b><em></em></div>
     </div>
-
-
 
     <!-- Skip link for keyboard users -->
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -323,15 +316,17 @@
 
             <span class="eyebrow">YOUR PATH TO DAILY REMEMBRANCE</span>
 
-            <h1>
-                Bring peace to your day with
-                <span>Zikrnoor.</span>
+            <h1 class="home-ayah-heading">
+                A moment to pause.
+                <span>A moment to remember.</span>
             </h1>
 
-            <p>
-                Make time for Quran, remember Allah through daily Adhkar,
-                count your Tasbeeh and learn from authentic Hadith sources.
-            </p>
+            <div class="home-daily-ayah" aria-live="polite">
+                <span class="daily-ayah-kicker">A VERSE FOR THIS VISIT</span>
+                <p class="daily-ayah-arabic" id="daily-ayah-arabic" lang="ar" dir="rtl">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</p>
+                <p class="daily-ayah-translation" id="daily-ayah-translation">“Read in the name of your Lord who created.”</p>
+                <span class="daily-ayah-reference" id="daily-ayah-reference">Surah Al-‘Alaq · 96:1</span>
+            </div>
 
             <a href="#tasbeeh-tool" class="primary-button">
                 Start your remembrance <span aria-hidden="true">→</span>
@@ -1208,29 +1203,32 @@ window.ZikrnoorLocation = {
  renderView();
 })();
 </script>
+
 <script>
-/* Cinematic introduction — session-only, skippable, and reduced-motion aware. */
+/* A verified Quran reminder is selected on each fresh visit; avoid immediate repetition. */
 (() => {
-  const intro = document.getElementById("zikr-intro");
-  const skip = document.getElementById("intro-skip");
-  if (!intro) return;
-  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let seen = false;
-  try { seen = sessionStorage.getItem("zikrnoor-intro-seen") === "1"; } catch (_) {}
-  const finish = () => {
-    intro.classList.add("intro-leaving");
-    intro.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("intro-playing");
-    try { sessionStorage.setItem("zikrnoor-intro-seen", "1"); } catch (_) {}
-    window.setTimeout(() => intro.remove(), reduceMotion ? 0 : 1100);
-  };
-  if (seen || reduceMotion) {
-    intro.remove();
-    return;
-  }
-  document.body.classList.add("intro-playing");
-  skip?.addEventListener("click", finish, { once: true });
-  window.setTimeout(finish, 6900);
+  const ayat = [
+    {ar:"اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",en:"Read in the name of your Lord who created.",ref:"Surah Al-‘Alaq · 96:1"},
+    {ar:"أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",en:"Surely in the remembrance of Allah do hearts find comfort.",ref:"Surah Ar-Ra‘d · 13:28"},
+    {ar:"فَإِنَّ مَعَ الْعُسْرِ يُسْرًا",en:"For indeed, with hardship comes ease.",ref:"Surah Ash-Sharh · 94:5"},
+    {ar:"فَاذْكُرُونِي أَذْكُرْكُمْ",en:"So remember Me; I will remember you.",ref:"Surah Al-Baqarah · 2:152"},
+    {ar:"لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا",en:"Allah does not burden a soul beyond that it can bear.",ref:"Surah Al-Baqarah · 2:286"},
+    {ar:"وَلَا تَهِنُوا وَلَا تَحْزَنُوا وَأَنْتُمُ الْأَعْلَوْنَ إِنْ كُنْتُمْ مُؤْمِنِينَ",en:"Do not lose heart or grieve; you will have the upper hand, if you are believers.",ref:"Surah Ali ‘Imran · 3:139"},
+    {ar:"وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ",en:"Whoever puts their trust in Allah, He is sufficient for them.",ref:"Surah At-Talaq · 65:3"}
+  ];
+  const arabic=document.getElementById("daily-ayah-arabic");
+  const translation=document.getElementById("daily-ayah-translation");
+  const reference=document.getElementById("daily-ayah-reference");
+  if(!arabic||!translation||!reference)return;
+  let previous="";
+  try{previous=localStorage.getItem("zikrnoor-last-visit-ayah")||"";}catch(_){}
+  let choices=ayat.filter(a=>a.ref!==previous);
+  if(!choices.length)choices=ayat;
+  const chosen=choices[Math.floor(Math.random()*choices.length)];
+  arabic.textContent=chosen.ar;
+  translation.textContent="“"+chosen.en+"”";
+  reference.textContent=chosen.ref;
+  try{localStorage.setItem("zikrnoor-last-visit-ayah",chosen.ref);}catch(_){}
 })();
 </script>
 </body>
