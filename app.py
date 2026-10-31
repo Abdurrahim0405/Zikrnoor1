@@ -43,6 +43,12 @@ def style_css():
     return send_from_directory(BASE_DIR, "style.css")
 
 
+@app.route("/frontend.css")
+def frontend_css():
+    """Serve the premium frontend stylesheet explicitly (Flask static serving is disabled)."""
+    return send_from_directory(BASE_DIR, "frontend.css", mimetype="text/css")
+
+
 @app.route("/script.js")
 def script_js():
     return send_from_directory(BASE_DIR, "script.js")
