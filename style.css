@@ -3084,3 +3084,186 @@ body[data-view="home"] {overflow:hidden!important;}
   body[data-view="home"] {overflow:auto!important;}
   body[data-view="home"] .container {height:auto!important;max-height:none!important;overflow:visible!important;}
 }
+
+
+/* ============================================================
+   ZIKRNOOR VISUAL POLISH — refined hierarchy, tighter dashboard,
+   richer glass surfaces and calmer typography.
+   ============================================================ */
+:root {
+  --zn-ink:#06131a;
+  --zn-glass:rgba(8,31,28,.76);
+  --zn-glass-light:rgba(16,49,42,.68);
+  --zn-line:rgba(205,169,101,.22);
+  --zn-gold:#e4bd73;
+  --zn-cream:#f4ead7;
+}
+body {
+  background:
+    radial-gradient(ellipse at 78% 38%,rgba(196,151,83,.10),transparent 34%),
+    radial-gradient(ellipse at 18% 12%,rgba(32,104,91,.16),transparent 38%),
+    linear-gradient(135deg,#06121a 0%,#081b1c 48%,#101d1b 100%)!important;
+  color:var(--zn-cream);
+}
+body::before {
+  opacity:.48!important;
+  background:
+    radial-gradient(ellipse at 50% 65%,rgba(213,166,91,.08),transparent 50%),
+    repeating-radial-gradient(circle at 80% 20%,transparent 0 74px,rgba(222,190,132,.025) 75px 76px)!important;
+}
+.site-header {
+  min-height:64px!important;
+  padding:8px 24px!important;
+  background:linear-gradient(110deg,rgba(5,20,27,.96),rgba(7,25,25,.86))!important;
+  border:1px solid rgba(217,187,132,.18)!important;
+  box-shadow:0 12px 38px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.045)!important;
+}
+.site-header .brand {font-size:clamp(25px,2vw,32px)!important;letter-spacing:-.8px;}
+.site-header p {font-size:10px!important;letter-spacing:2px!important;color:#c9b992!important;}
+.navbar {
+  min-height:48px;
+  padding:5px 10px!important;
+  background:rgba(4,17,22,.88)!important;
+  border:1px solid rgba(217,187,132,.14)!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.12)!important;
+  gap:3px!important;
+}
+.navbar a {
+  padding:9px 12px!important;
+  border-radius:999px!important;
+  color:#c7c9bd!important;
+  font-size:12px!important;
+  transition:background .2s ease,color .2s ease,transform .2s ease;
+}
+.navbar a:hover {background:rgba(211,177,111,.10)!important;color:#f5dfb4!important;transform:translateY(-1px);}
+.navbar a.active {
+  background:linear-gradient(135deg,rgba(204,165,95,.20),rgba(39,93,73,.24))!important;
+  border:1px solid rgba(223,188,119,.30)!important;
+  color:#f5dfb4!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07),0 5px 18px rgba(0,0,0,.12)!important;
+}
+body[data-view="home"] .container {padding-top:8px!important;}
+.dashboard-topbar {
+  min-height:68px!important;
+  padding:9px 12px!important;
+  gap:10px!important;
+  border-radius:20px!important;
+  background:linear-gradient(105deg,rgba(8,30,29,.86),rgba(10,25,28,.90))!important;
+  border:1px solid rgba(205,169,101,.19)!important;
+  box-shadow:0 12px 32px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.045)!important;
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+}
+.dashboard-search {
+  min-height:48px!important;
+  padding:0 13px!important;
+  border-radius:14px!important;
+  background:rgba(3,16,21,.68)!important;
+  border:1px solid rgba(213,174,104,.23)!important;
+  box-shadow:inset 0 1px 4px rgba(0,0,0,.22)!important;
+}
+.dashboard-search input {font-size:14px!important;color:#f1e6d1!important;}
+.dashboard-search input::placeholder {color:#87938d!important;}
+.dashboard-location,.dashboard-date {
+  min-height:48px!important;
+  padding:7px 14px!important;
+  border-radius:14px!important;
+  background:rgba(5,23,24,.76)!important;
+  border:1px solid rgba(205,169,101,.20)!important;
+}
+.dashboard-location strong,.dashboard-date strong {font-size:12px!important;color:#f1e7d5!important;}
+.dashboard-location small,.dashboard-date small {font-size:10px!important;color:#aab6ad!important;}
+.dashboard-hero-grid .welcome {
+  position:relative;isolation:isolate;
+  min-height:clamp(330px,42vh,440px)!important;
+  padding:clamp(28px,4vh,48px) clamp(28px,4vw,58px)!important;
+  border-radius:26px!important;
+  border:1px solid rgba(92,165,126,.34)!important;
+  background:
+    radial-gradient(ellipse at 82% 52%,rgba(190,148,82,.16),transparent 40%),
+    linear-gradient(115deg,rgba(8,43,34,.96),rgba(6,31,27,.93) 58%,rgba(5,24,24,.92))!important;
+  box-shadow:0 24px 60px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.07)!important;
+  overflow:hidden;
+}
+.dashboard-hero-grid .welcome::after {
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(90deg,rgba(2,16,18,.12),transparent 52%,rgba(227,184,106,.045));
+}
+body[data-view="home"] .dashboard-hero-grid .welcome h1.home-ayah-heading {
+  max-width:680px!important;
+  font-size:clamp(30px,3.15vw,48px)!important;
+  line-height:1.08!important;
+  letter-spacing:-1.6px!important;
+  margin:0 0 18px!important;
+  text-wrap:balance;
+}
+.home-daily-ayah {
+  width:min(680px,66%)!important;
+  min-height:150px;
+  padding:18px 22px!important;
+  border-radius:19px!important;
+  border:1px solid rgba(226,194,135,.23)!important;
+  background:linear-gradient(125deg,rgba(3,18,23,.72),rgba(17,49,41,.58))!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.07)!important;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.daily-ayah-kicker {font-size:9px!important;letter-spacing:2.5px!important;color:#d9b979!important;}
+.daily-ayah-arabic {
+  text-align:center!important;
+  font-size:clamp(27px,2.8vw,39px)!important;
+  line-height:1.7!important;
+  margin:2px 0 5px!important;
+  color:#f4dfb8!important;
+}
+.daily-ayah-translation {
+  font-size:clamp(14px,1.2vw,17px)!important;
+  line-height:1.5!important;
+  color:#e7dfcf!important;
+}
+.daily-ayah-reference {font-size:9px!important;letter-spacing:1.7px!important;color:#cdb27c!important;}
+body[data-view="home"] .dashboard-hero-verse {
+  width:174px!important;min-height:198px!important;
+  right:clamp(22px,3vw,44px)!important;
+  border-radius:20px!important;
+  border:1px solid rgba(221,188,122,.27)!important;
+  background:linear-gradient(150deg,rgba(5,22,26,.86),rgba(13,35,31,.76))!important;
+  box-shadow:0 16px 42px rgba(0,0,0,.20),inset 0 1px rgba(255,255,255,.06)!important;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+body[data-view="home"] .hero-mosque-art {
+  right:10%!important;width:49%!important;opacity:.19!important;
+  filter:drop-shadow(0 0 24px rgba(220,174,98,.16));
+}
+body[data-view="home"] .dashboard-utility-grid {gap:14px!important;margin-top:14px!important;}
+body[data-view="home"] .dashboard-utility-grid > * {
+  border-radius:20px!important;
+  border:1px solid rgba(115,166,132,.24)!important;
+  background:linear-gradient(145deg,rgba(10,42,34,.90),rgba(5,24,24,.90))!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.045)!important;
+}
+body[data-view="home"] .dashboard-utility-grid > *:hover {
+  border-color:rgba(219,181,112,.36)!important;
+  transform:translateY(-2px);
+  transition:transform .2s ease,border-color .2s ease;
+}
+body[data-view="home"] .dashboard-utility-grid h2 {color:#f0e5d2!important;letter-spacing:-.35px;}
+body[data-view="home"] .dashboard-utility-grid p {color:#aebdb2!important;line-height:1.55;}
+body[data-view="home"] .dashboard-prayer-list > div {
+  border-bottom:1px solid rgba(213,174,104,.12)!important;
+  padding:8px 2px!important;
+}
+body[data-view="home"] .dashboard-prayer-list strong {color:#f0d39a!important;}
+/* Remove the feeling of a second oversized search page on narrower desktops. */
+@media(min-width:761px) and (max-width:1100px) {
+  .navbar {overflow-x:auto!important;justify-content:flex-start!important;}
+  .navbar a {padding:8px 9px!important;font-size:11px!important;}
+  body[data-view="home"] .home-daily-ayah {width:70%!important;}
+  body[data-view="home"] .dashboard-hero-verse {width:150px!important;right:18px!important;}
+}
+@media(max-width:760px) {
+  .site-header {border-radius:17px 17px 0 0!important;}
+  .navbar {border-radius:0 0 17px 17px!important;}
+  .dashboard-topbar {border-radius:16px!important;}
+  body[data-view="home"] .dashboard-hero-grid .welcome {border-radius:20px!important;}
+  body[data-view="home"] .home-daily-ayah {min-height:0!important;padding:14px!important;}
+  body[data-view="home"] .dashboard-hero-verse {width:auto!important;}
+}
