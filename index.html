@@ -246,6 +246,35 @@
 </head>
 
 <body data-view="home">
+    <!-- Symbolic Quran descent: luminous book animation with the first five revealed verses -->
+    <div class="revelation-scene" id="revelation-scene" role="status" aria-label="The first five verses revealed from Surah Al-Alaq">
+      <div class="revelation-sky" aria-hidden="true">
+        <span class="revelation-star rs-one"></span><span class="revelation-star rs-two"></span><span class="revelation-star rs-three"></span>
+        <span class="revelation-beam"></span><span class="revelation-ground"></span>
+        <div class="revelation-book" aria-hidden="true"><span class="book-cover-mark">۞</span><span class="book-cover-title">القرآن الكريم</span><span class="book-cover-mark">۞</span></div>
+        <div class="revelation-mosque"><i></i><b></b><em></em></div>
+      </div>
+      <div class="revelation-copy">
+        <span class="revelation-bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+        <span class="revelation-kicker">THE FIRST REVELATION · SURAH AL-‘ALAQ</span>
+        <div class="revelation-verses" lang="ar" dir="rtl">
+          <p>اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</p>
+          <p>خَلَقَ الْإِنْسَانَ مِنْ عَلَقٍ</p>
+          <p>اقْرَأْ وَرَبُّكَ الْأَكْرَمُ</p>
+          <p>الَّذِي عَلَّمَ بِالْقَلَمِ</p>
+          <p>عَلَّمَ الْإِنْسَانَ مَا لَمْ يَعْلَمْ</p>
+        </div>
+        <div class="revelation-meaning">
+          <p>Read in the name of your Lord who created.</p>
+          <p>Created man from a clinging substance.</p>
+          <p>Read, and your Lord is the Most Generous.</p>
+          <p>Who taught by the pen.</p>
+          <p>Taught man that which he knew not.</p>
+        </div>
+        <span class="revelation-reference">QURAN · 96:1–5</span>
+      </div>
+      <div class="revelation-footer">A BEGINNING OF LIGHT · KNOWLEDGE · REMEMBRANCE</div>
+    </div>
 
     <!-- Persistent cinematic atmosphere (not a blocking intro) -->
     <div class="site-atmosphere" aria-hidden="true">
@@ -1229,6 +1258,21 @@ window.ZikrnoorLocation = {
   translation.textContent="“"+chosen.en+"”";
   reference.textContent=chosen.ref;
   try{localStorage.setItem("zikrnoor-last-visit-ayah",chosen.ref);}catch(_){}
+})();
+</script>
+<script>
+/* Play a short symbolic book-descent scene on every fresh page load. */
+(() => {
+  const scene=document.getElementById("revelation-scene");
+  if(!scene)return;
+  const reduced=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.body.classList.add("revelation-playing");
+  const finish=()=>{
+    scene.classList.add("revelation-leaving");
+    document.body.classList.remove("revelation-playing");
+    window.setTimeout(()=>scene.remove(),reduced?0:850);
+  };
+  window.setTimeout(finish,reduced?1600:9000);
 })();
 </script>
 </body>
