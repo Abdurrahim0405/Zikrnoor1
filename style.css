@@ -2958,7 +2958,7 @@ body.revelation-playing {overflow:hidden!important;}
 .revelation-mosque::after {content:"";position:absolute;bottom:72px;left:36%;width:28%;height:78px;border:1px solid rgba(231,192,126,.5);border-bottom:0;border-radius:100% 100% 0 0;}
 .revelation-mosque i,.revelation-mosque b,.revelation-mosque em {position:absolute;bottom:0;width:12px;height:132px;border:1px solid rgba(231,192,126,.5);border-bottom:0;}
 .revelation-mosque i{left:12%;}.revelation-mosque b{right:12%;height:145px;}.revelation-mosque em{left:50%;height:108px;}
-.revelation-copy {position:relative;z-index:4;width:min(940px,92vw);text-align:center;padding:18px 20px 44px;opacity:0;animation:revelationTextIn 1.1s 2.2s ease forwards;}
+.revelation-copy {position:absolute;z-index:4;left:50%;top:54%;transform:translate(-50%,18px);width:min(940px,92vw);text-align:center;padding:18px 20px 44px;opacity:0;animation:revelationTextIn 1.1s 2.2s ease forwards;}
 .revelation-bismillah {display:block;color:#e8cf9e;font-family:Georgia,serif;font-size:clamp(16px,2vw,23px);margin-bottom:12px;}
 .revelation-kicker {display:block;color:#d4b477;font-size:9px;font-weight:700;letter-spacing:3px;margin-bottom:10px;}
 .revelation-verses {color:#f5dfb4;font-family:'Amiri',Georgia,serif;font-size:clamp(18px,2.5vw,29px);line-height:1.65;text-shadow:0 0 25px rgba(230,182,108,.26);}
@@ -2968,8 +2968,8 @@ body.revelation-playing {overflow:hidden!important;}
 .revelation-reference {display:block;margin-top:10px;color:#d1b77f;font-size:10px;letter-spacing:2px;}
 .revelation-footer {position:absolute;z-index:4;bottom:3%;left:0;right:0;text-align:center;color:rgba(233,211,172,.68);font-size:8px;letter-spacing:2px;}
 .revelation-scene.revelation-leaving {opacity:0;visibility:hidden;pointer-events:none;}
-@keyframes bookDescend {0%{top:-35%;transform:translateX(-50%) rotateX(13deg) rotateZ(-4deg);filter:brightness(1.4)}55%{top:31%;transform:translateX(-50%) rotateX(3deg) rotateZ(2deg)}78%{top:38%;transform:translateX(-50%) rotateX(0) rotateZ(-1deg)}100%{top:36%;transform:translateX(-50%) rotateX(0) rotateZ(0);filter:brightness(1)}}
-@keyframes revelationTextIn {to{opacity:1;transform:translateY(0)}from{opacity:0;transform:translateY(18px)}}
+@keyframes bookDescend {0%{top:-35%;transform:translateX(-50%) rotateX(13deg) rotateZ(-4deg);filter:brightness(1.4)}55%{top:20%;transform:translateX(-50%) rotateX(3deg) rotateZ(2deg)}78%{top:13%;transform:translateX(-50%) rotateX(0) rotateZ(-1deg)}100%{top:10%;transform:translateX(-50%) rotateX(0) rotateZ(0);filter:brightness(1)}}
+@keyframes revelationTextIn {to{opacity:1;transform:translate(-50%,0)}from{opacity:0;transform:translate(-50%,18px)}}
 @keyframes revelationTwinkle {from{opacity:.2;transform:scale(.7)}to{opacity:1;transform:scale(1.3)}}
 @keyframes beamPulse {from{opacity:.45}to{opacity:1}}
 @media(max-width:760px) {
@@ -2990,7 +2990,7 @@ body.revelation-playing {overflow:hidden!important;}
  body[data-view="home"] .dashboard-prayer-card {grid-column:1/-1;}
  body[data-view="home"] .dashboard-quick-actions {grid-template-columns:repeat(2,minmax(0,1fr));}
  body:not([data-view="home"]) .app-section {height:auto;max-height:none;min-height:calc(100dvh - 110px);overflow:visible;}
- .revelation-copy {padding:10px 12px 35px;}
+ .revelation-copy {top:53%;padding:10px 12px 35px;}
  .revelation-verses {font-size:clamp(16px,4.4vw,23px);line-height:1.55;}
  .revelation-meaning {font-size:11px;line-height:1.4;}
  .revelation-book {width:82px;height:112px;}
@@ -3002,6 +3002,6 @@ body.revelation-playing {overflow:hidden!important;}
 }
 @media(prefers-reduced-motion:reduce) {
  .revelation-book,.revelation-star,.revelation-beam {animation:none!important;}
- .revelation-book {top:30%;left:50%;transform:translateX(-50%);}
+ .revelation-book {top:10%;left:50%;transform:translateX(-50%);}
  .revelation-copy {opacity:1;animation:none!important;}
 }
