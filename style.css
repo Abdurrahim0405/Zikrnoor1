@@ -3060,3 +3060,27 @@ body.revelation-playing {overflow:hidden!important;}
   .revelation-verses {font-size:21px!important;line-height:1.25!important;}
   .revelation-meaning {font-size:10px!important;line-height:1.25!important;}
 }
+
+
+/* FIX: homepage content was clipped because its fixed-height shell hid overflow.
+   Keep the browser canvas fixed, but allow the homepage's own content area to scroll. */
+body[data-view="home"] .container {
+  height:calc(100dvh - 118px)!important;
+  max-height:calc(100dvh - 118px)!important;
+  min-height:0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:contain;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(213,174,104,.48) rgba(5,15,20,.15);
+  scroll-behavior:smooth;
+  padding-bottom:28px!important;
+}
+body[data-view="home"] .container::-webkit-scrollbar {width:8px;}
+body[data-view="home"] .container::-webkit-scrollbar-thumb {background:rgba(213,174,104,.45);border-radius:20px;}
+body[data-view="home"] .container::-webkit-scrollbar-track {background:rgba(5,15,20,.12);}
+body[data-view="home"] {overflow:hidden!important;}
+@media(max-width:760px) {
+  body[data-view="home"] {overflow:auto!important;}
+  body[data-view="home"] .container {height:auto!important;max-height:none!important;overflow:visible!important;}
+}
