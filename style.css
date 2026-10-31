@@ -2780,3 +2780,104 @@ body.intro-playing { overflow:hidden; }
   .zikr-intro { display:none!important; }
   .dashboard-action-card,.feature-card { transition:none!important; }
 }
+
+
+/* ============================================================
+   IMMERSIVE FULL-SCREEN APP — persistent Quran-inspired canvas
+   ============================================================ */
+html,body { height:100%; }
+body {
+  height:100dvh; min-height:0; overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 72%,rgba(180,128,69,.18),transparent 39%),
+    radial-gradient(ellipse at 16% 24%,rgba(36,104,111,.20),transparent 42%),
+    linear-gradient(180deg,#050d18 0%,#0b1b29 48%,#182a30 76%,#080f16 100%);
+}
+body::before {
+  opacity:.95;
+  background:
+    repeating-radial-gradient(circle at 50% 54%,transparent 0 58px,rgba(228,192,128,.035) 59px 60px),
+    radial-gradient(ellipse at 50% 76%,rgba(196,145,78,.16),transparent 48%),
+    radial-gradient(ellipse at 12% 28%,rgba(48,117,118,.18),transparent 40%);
+}
+body::after { opacity:.28; }
+.site-atmosphere { position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden; }
+.atmosphere-star { position:absolute;width:3px;height:3px;border-radius:50%;background:#f5dfb2;box-shadow:0 0 14px 4px rgba(247,215,159,.42);animation:ambientTwinkle 3.4s ease-in-out infinite alternate; }
+.atmosphere-star.star-a {left:17%;top:22%;}
+.atmosphere-star.star-b {right:19%;top:18%;animation-delay:1s;}
+.atmosphere-star.star-c {left:72%;top:38%;animation-delay:2s;}
+.atmosphere-horizon {position:absolute;left:-10%;right:-10%;bottom:-4%;height:40%;background:radial-gradient(ellipse at 50% 100%,rgba(215,157,83,.28),transparent 68%);filter:blur(18px);}
+.atmosphere-mosque {position:absolute;bottom:-3%;left:50%;width:min(760px,76vw);height:220px;transform:translateX(-50%);opacity:.16;filter:drop-shadow(0 0 28px rgba(230,177,99,.20));}
+.atmosphere-mosque::before {content:"";position:absolute;bottom:0;left:10%;right:10%;height:110px;border:1px solid rgba(231,192,126,.60);border-bottom:0;border-radius:46% 46% 0 0;background:linear-gradient(180deg,rgba(190,139,76,.12),rgba(5,16,23,.55));}
+.atmosphere-mosque::after {content:"";position:absolute;bottom:105px;left:35%;width:30%;height:110px;border:1px solid rgba(231,192,126,.58);border-bottom:0;border-radius:100% 100% 0 0;background:linear-gradient(180deg,rgba(217,169,99,.14),transparent);}
+.atmosphere-mosque i,.atmosphere-mosque b,.atmosphere-mosque em {position:absolute;bottom:0;width:15px;height:190px;border:1px solid rgba(231,192,126,.58);border-bottom:0;background:linear-gradient(180deg,rgba(214,170,102,.12),rgba(5,16,23,.65));}
+.atmosphere-mosque i{left:13%;}.atmosphere-mosque b{right:13%;height:205px;}.atmosphere-mosque em{left:50%;height:150px;width:12px;}
+@keyframes ambientTwinkle {from{opacity:.22;transform:scale(.7)}to{opacity:.9;transform:scale(1.25)}}
+
+/* The main area is a fixed app canvas. Navigation changes views;
+   only long content inside an individual view can scroll. */
+.container {
+  height:100dvh;max-height:100dvh;min-height:0;overflow:hidden;
+  overscroll-behavior:contain;
+  padding-top:clamp(14px,2vh,24px);padding-bottom:clamp(14px,2vh,24px);
+}
+body[data-view="home"] .dashboard-inspiration-grid,
+body[data-view="home"] .daily-card,
+body[data-view="home"] .container > section[aria-labelledby="features-heading"],
+body[data-view="home"] .dashboard-main-grid {display:none!important;}
+body[data-view="home"] .dashboard-hero-grid .welcome {
+  min-height:clamp(260px,39vh,390px);height:clamp(260px,39vh,390px);
+  padding:clamp(24px,4vh,48px) clamp(24px,4vw,56px);
+  display:flex;flex-direction:column;justify-content:center;
+}
+body[data-view="home"] .dashboard-hero-grid .welcome h1.home-ayah-heading {
+  font-size:clamp(28px,3.5vw,48px);line-height:1.08;max-width:780px;margin:8px 0 16px;
+}
+.home-daily-ayah {
+  position:relative;z-index:2;width:min(760px,75%);margin:0;
+  padding:clamp(12px,2vh,22px) clamp(16px,2vw,26px);
+  border:1px solid rgba(232,204,151,.22);border-radius:18px;
+  background:linear-gradient(120deg,rgba(4,15,24,.55),rgba(255,255,255,.035));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 16px 42px rgba(0,0,0,.16);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.daily-ayah-kicker {display:block;color:#d4b477;font-size:10px;font-weight:700;letter-spacing:2.8px;margin-bottom:7px;}
+.daily-ayah-arabic {color:#f5dfb4;font-family:'Amiri',Georgia,serif;font-size:clamp(25px,3.2vw,42px);line-height:1.65;text-shadow:0 0 28px rgba(230,182,108,.24);margin:0 0 4px;}
+.daily-ayah-translation {color:#f0e5d1;font-family:Georgia,serif;font-size:clamp(14px,1.5vw,18px);line-height:1.45;margin:0 0 7px;}
+.daily-ayah-reference {color:#d1b77f;font-size:10px;letter-spacing:1.4px;}
+body[data-view="home"] .dashboard-hero-verse {position:absolute;right:clamp(18px,3vw,42px);top:50%;transform:translateY(-50%);width:190px;min-height:210px;display:flex;flex-direction:column;justify-content:center;z-index:2;}
+body[data-view="home"] .hero-mosque-art {right:12%;width:48%;opacity:.25!important;}
+body[data-view="home"] .dashboard-utility-grid {grid-template-columns:1.4fr 1fr 1fr;gap:12px;margin-top:12px;}
+body[data-view="home"] .dashboard-prayer-card,
+body[data-view="home"] .dashboard-qibla-preview,
+body[data-view="home"] .dashboard-masjid-preview {min-height:clamp(160px,24vh,220px);padding:18px;}
+body[data-view="home"] .dashboard-quick-actions {margin-top:12px;gap:10px;}
+body[data-view="home"] .dashboard-action-card {padding:12px 15px;min-height:62px;}
+body[data-view="home"] .dashboard-action-card small {font-size:11px;}
+/* Dedicated views occupy the same viewport; overflow stays inside the active view. */
+body:not([data-view="home"]) .app-section {
+  height:calc(100dvh - 36px);max-height:calc(100dvh - 36px);
+  overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;
+  scrollbar-color:rgba(213,174,104,.35) transparent;
+}
+body:not([data-view="home"]) .app-section::-webkit-scrollbar {width:7px;}
+body:not([data-view="home"]) .app-section::-webkit-scrollbar-thumb {background:rgba(213,174,104,.32);border-radius:99px;}
+/* The body itself never becomes a long scrolling document. */
+body:not([data-view="home"]) .container {overflow:hidden;}
+@media(max-width:900px) {
+  body[data-view="home"] .dashboard-hero-grid .welcome {height:auto;min-height:0;padding:28px 22px;}
+  .home-daily-ayah {width:100%;max-width:100%;}
+  body[data-view="home"] .dashboard-hero-verse {position:relative;right:auto;top:auto;transform:none;width:auto;min-height:0;margin-top:12px;}
+  body[data-view="home"] .dashboard-utility-grid {grid-template-columns:1fr 1fr;}
+  body[data-view="home"] .dashboard-prayer-card {grid-column:1/-1;}
+  .container {overflow-y:auto;scrollbar-width:thin;}
+}
+@media(max-width:600px) {
+  body {height:auto;min-height:100dvh;overflow:auto;}
+  .container {height:auto;max-height:none;min-height:calc(100dvh - 20px);overflow:visible;}
+  body[data-view="home"] .dashboard-utility-grid {grid-template-columns:1fr;}
+  body[data-view="home"] .dashboard-prayer-card {grid-column:auto;}
+  body:not([data-view="home"]) .app-section {height:auto;max-height:none;min-height:calc(100dvh - 30px);overflow:visible;}
+  .atmosphere-mosque {width:100vw;opacity:.10;}
+}
+@media(prefers-reduced-motion:reduce) {.atmosphere-star{animation:none!important;}}
