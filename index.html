@@ -14,6 +14,8 @@
     <meta name="twitter:card" content="summary_large_image">
 
     <title>Zikrnoor | Your Daily Spiritual Companion</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23091b19'/%3E%3Cpath d='M42 12a21 21 0 1 0 10 37A23 23 0 0 1 42 12Z' fill='%23e4bd73'/%3E%3Cpath d='M18 47h28M22 43V29l10-8 10 8v14M28 43V33h8v10' fill='none' stroke='%23e4bd73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%23091b19'/%3E%3Cpath d='M42 12a21 21 0 1 0 10 37A23 23 0 0 1 42 12Z' fill='%23e4bd73'/%3E%3Cpath d='M18 47h28M22 43V29l10-8 10 8v14M28 43V33h8v10' fill='none' stroke='%23e4bd73' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 
     <link rel="stylesheet" href="./style.css">
 
@@ -1219,7 +1221,11 @@ window.ZikrnoorLocation = {
   const hash=link.getAttribute("href");
   if(!hash||hash==="#")return;
   const id=hash.slice(1), target=document.getElementById(id);
-  if(id==="home"|| (target&&target.classList.contains("app-section"))){
+  if(id==="home"){
+   event.preventDefault();
+   if(location.hash||location.search) history.pushState(null,"",location.pathname);
+   renderView();
+  } else if(target&&target.classList.contains("app-section")){
    event.preventDefault();
    if(location.hash===hash) renderView();
    else location.hash=hash;
@@ -1228,7 +1234,14 @@ window.ZikrnoorLocation = {
    if(section){event.preventDefault();location.hash="#"+section.id;}
   }
  });
+ // Strip campaign tracking parameters and redundant #home from the address bar.
+ const initialHash=location.hash;
+ if(location.search || initialHash==="#home"){
+  const cleanUrl=location.pathname+(initialHash&&initialHash!=="#home"?initialHash:"");
+  history.replaceState(null,"",cleanUrl);
+ }
  window.addEventListener("hashchange",renderView);
+ window.addEventListener("popstate",renderView);
  renderView();
 })();
 </script>
