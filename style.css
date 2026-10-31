@@ -2780,3 +2780,228 @@ body.intro-playing { overflow:hidden; }
   .zikr-intro { display:none!important; }
   .dashboard-action-card,.feature-card { transition:none!important; }
 }
+
+
+/* ============================================================
+   IMMERSIVE FULL-SCREEN APP — persistent Quran-inspired canvas
+   ============================================================ */
+html,body { height:100%; }
+body {
+  height:100dvh; min-height:0; overflow:hidden;
+  background:
+    radial-gradient(ellipse at 50% 72%,rgba(180,128,69,.18),transparent 39%),
+    radial-gradient(ellipse at 16% 24%,rgba(36,104,111,.20),transparent 42%),
+    linear-gradient(180deg,#050d18 0%,#0b1b29 48%,#182a30 76%,#080f16 100%);
+}
+body::before {
+  opacity:.95;
+  background:
+    repeating-radial-gradient(circle at 50% 54%,transparent 0 58px,rgba(228,192,128,.035) 59px 60px),
+    radial-gradient(ellipse at 50% 76%,rgba(196,145,78,.16),transparent 48%),
+    radial-gradient(ellipse at 12% 28%,rgba(48,117,118,.18),transparent 40%);
+}
+body::after { opacity:.28; }
+.site-atmosphere { position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden; }
+.atmosphere-star { position:absolute;width:3px;height:3px;border-radius:50%;background:#f5dfb2;box-shadow:0 0 14px 4px rgba(247,215,159,.42);animation:ambientTwinkle 3.4s ease-in-out infinite alternate; }
+.atmosphere-star.star-a {left:17%;top:22%;}
+.atmosphere-star.star-b {right:19%;top:18%;animation-delay:1s;}
+.atmosphere-star.star-c {left:72%;top:38%;animation-delay:2s;}
+.atmosphere-horizon {position:absolute;left:-10%;right:-10%;bottom:-4%;height:40%;background:radial-gradient(ellipse at 50% 100%,rgba(215,157,83,.28),transparent 68%);filter:blur(18px);}
+.atmosphere-mosque {position:absolute;bottom:-3%;left:50%;width:min(760px,76vw);height:220px;transform:translateX(-50%);opacity:.16;filter:drop-shadow(0 0 28px rgba(230,177,99,.20));}
+.atmosphere-mosque::before {content:"";position:absolute;bottom:0;left:10%;right:10%;height:110px;border:1px solid rgba(231,192,126,.60);border-bottom:0;border-radius:46% 46% 0 0;background:linear-gradient(180deg,rgba(190,139,76,.12),rgba(5,16,23,.55));}
+.atmosphere-mosque::after {content:"";position:absolute;bottom:105px;left:35%;width:30%;height:110px;border:1px solid rgba(231,192,126,.58);border-bottom:0;border-radius:100% 100% 0 0;background:linear-gradient(180deg,rgba(217,169,99,.14),transparent);}
+.atmosphere-mosque i,.atmosphere-mosque b,.atmosphere-mosque em {position:absolute;bottom:0;width:15px;height:190px;border:1px solid rgba(231,192,126,.58);border-bottom:0;background:linear-gradient(180deg,rgba(214,170,102,.12),rgba(5,16,23,.65));}
+.atmosphere-mosque i{left:13%;}.atmosphere-mosque b{right:13%;height:205px;}.atmosphere-mosque em{left:50%;height:150px;width:12px;}
+@keyframes ambientTwinkle {from{opacity:.22;transform:scale(.7)}to{opacity:.9;transform:scale(1.25)}}
+
+/* The main area is a fixed app canvas. Navigation changes views;
+   only long content inside an individual view can scroll. */
+.container {
+  height:100dvh;max-height:100dvh;min-height:0;overflow:hidden;
+  overscroll-behavior:contain;
+  padding-top:clamp(14px,2vh,24px);padding-bottom:clamp(14px,2vh,24px);
+}
+body[data-view="home"] .dashboard-inspiration-grid,
+body[data-view="home"] .daily-card,
+body[data-view="home"] .container > section[aria-labelledby="features-heading"],
+body[data-view="home"] .dashboard-main-grid {display:none!important;}
+body[data-view="home"] .dashboard-hero-grid .welcome {
+  min-height:clamp(260px,39vh,390px);height:clamp(260px,39vh,390px);
+  padding:clamp(24px,4vh,48px) clamp(24px,4vw,56px);
+  display:flex;flex-direction:column;justify-content:center;
+}
+body[data-view="home"] .dashboard-hero-grid .welcome h1.home-ayah-heading {
+  font-size:clamp(28px,3.5vw,48px);line-height:1.08;max-width:780px;margin:8px 0 16px;
+}
+.home-daily-ayah {
+  position:relative;z-index:2;width:min(760px,75%);margin:0;
+  padding:clamp(12px,2vh,22px) clamp(16px,2vw,26px);
+  border:1px solid rgba(232,204,151,.22);border-radius:18px;
+  background:linear-gradient(120deg,rgba(4,15,24,.55),rgba(255,255,255,.035));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 16px 42px rgba(0,0,0,.16);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.daily-ayah-kicker {display:block;color:#d4b477;font-size:10px;font-weight:700;letter-spacing:2.8px;margin-bottom:7px;}
+.daily-ayah-arabic {color:#f5dfb4;font-family:'Amiri',Georgia,serif;font-size:clamp(25px,3.2vw,42px);line-height:1.65;text-shadow:0 0 28px rgba(230,182,108,.24);margin:0 0 4px;}
+.daily-ayah-translation {color:#f0e5d1;font-family:Georgia,serif;font-size:clamp(14px,1.5vw,18px);line-height:1.45;margin:0 0 7px;}
+.daily-ayah-reference {color:#d1b77f;font-size:10px;letter-spacing:1.4px;}
+body[data-view="home"] .dashboard-hero-verse {position:absolute;right:clamp(18px,3vw,42px);top:50%;transform:translateY(-50%);width:190px;min-height:210px;display:flex;flex-direction:column;justify-content:center;z-index:2;}
+body[data-view="home"] .hero-mosque-art {right:12%;width:48%;opacity:.25!important;}
+body[data-view="home"] .dashboard-utility-grid {grid-template-columns:1.4fr 1fr 1fr;gap:12px;margin-top:12px;}
+body[data-view="home"] .dashboard-prayer-card,
+body[data-view="home"] .dashboard-qibla-preview,
+body[data-view="home"] .dashboard-masjid-preview {min-height:clamp(160px,24vh,220px);padding:18px;}
+body[data-view="home"] .dashboard-quick-actions {margin-top:12px;gap:10px;}
+body[data-view="home"] .dashboard-action-card {padding:12px 15px;min-height:62px;}
+body[data-view="home"] .dashboard-action-card small {font-size:11px;}
+/* Dedicated views occupy the same viewport; overflow stays inside the active view. */
+body:not([data-view="home"]) .app-section {
+  height:calc(100dvh - 36px);max-height:calc(100dvh - 36px);
+  overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;
+  scrollbar-color:rgba(213,174,104,.35) transparent;
+}
+body:not([data-view="home"]) .app-section::-webkit-scrollbar {width:7px;}
+body:not([data-view="home"]) .app-section::-webkit-scrollbar-thumb {background:rgba(213,174,104,.32);border-radius:99px;}
+/* The body itself never becomes a long scrolling document. */
+body:not([data-view="home"]) .container {overflow:hidden;}
+@media(max-width:900px) {
+  body[data-view="home"] .dashboard-hero-grid .welcome {height:auto;min-height:0;padding:28px 22px;}
+  .home-daily-ayah {width:100%;max-width:100%;}
+  body[data-view="home"] .dashboard-hero-verse {position:relative;right:auto;top:auto;transform:none;width:auto;min-height:0;margin-top:12px;}
+  body[data-view="home"] .dashboard-utility-grid {grid-template-columns:1fr 1fr;}
+  body[data-view="home"] .dashboard-prayer-card {grid-column:1/-1;}
+  .container {overflow-y:auto;scrollbar-width:thin;}
+}
+@media(max-width:600px) {
+  body {height:auto;min-height:100dvh;overflow:auto;}
+  .container {height:auto;max-height:none;min-height:calc(100dvh - 20px);overflow:visible;}
+  body[data-view="home"] .dashboard-utility-grid {grid-template-columns:1fr;}
+  body[data-view="home"] .dashboard-prayer-card {grid-column:auto;}
+  body:not([data-view="home"]) .app-section {height:auto;max-height:none;min-height:calc(100dvh - 30px);overflow:visible;}
+  .atmosphere-mosque {width:100vw;opacity:.10;}
+}
+@media(prefers-reduced-motion:reduce) {.atmosphere-star{animation:none!important;}}
+
+/* ============================================================
+   REFINEMENT: fix header/nav alignment, viewport fit and footer overflow
+   ============================================================ */
+html,body {width:100%;max-width:100%;margin:0;}
+body {overflow-x:hidden;}
+.site-header {
+  position:relative!important;left:auto!important;right:auto!important;top:auto!important;
+  width:min(100% - 40px,1480px)!important;max-width:1480px!important;
+  min-height:76px;box-sizing:border-box;margin:14px auto 0!important;
+  display:flex!important;flex-direction:row!important;align-items:center!important;
+  justify-content:space-between!important;padding:10px 26px!important;
+  border-radius:20px 20px 0 0!important;
+}
+.site-header .brand {flex:0 0 auto;white-space:nowrap;}
+.site-header p {margin:0 0 0 auto!important;text-align:right;max-width:260px;}
+.navbar {
+  position:relative!important;left:auto!important;right:auto!important;top:auto!important;
+  width:min(100% - 40px,1480px)!important;max-width:1480px!important;
+  box-sizing:border-box;margin:0 auto 12px!important;
+  display:flex!important;flex-direction:row!important;align-items:center!important;
+  flex-wrap:nowrap!important;justify-content:flex-start!important;
+  overflow-x:auto!important;overflow-y:hidden!important;white-space:nowrap;
+  border-radius:0 0 20px 20px!important;
+}
+.navbar a {flex:0 0 auto!important;white-space:nowrap;}
+.container {width:min(100% - 40px,1480px)!important;max-width:1480px!important;box-sizing:border-box;margin:0 auto!important;}
+.dashboard-topbar {width:100%;max-width:100%;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:12px;}
+.dashboard-search {min-width:0;width:100%;box-sizing:border-box;}
+.dashboard-search input {min-width:0;width:100%;box-sizing:border-box;}
+.dashboard-location,.dashboard-date {min-width:145px;max-width:190px;box-sizing:border-box;}
+body[data-view="home"] .dashboard-inspiration-grid,
+body[data-view="home"] .dashboard-main-grid,
+body[data-view="home"] .daily-card,
+body[data-view="home"] .container > section[aria-labelledby="features-heading"],
+body[data-view="home"] footer.site-footer,
+body[data-view="home"] footer.contact-footer {display:none!important;}
+body[data-view="home"] .container {height:calc(100dvh - 118px);max-height:calc(100dvh - 118px);min-height:0;overflow:hidden;padding-top:10px;padding-bottom:12px;}
+body[data-view="home"] .dashboard-topbar {margin:0 0 12px!important;padding:10px 14px;}
+body[data-view="home"] .dashboard-hero-grid .welcome {min-height:clamp(220px,34vh,330px);height:auto;padding:clamp(18px,3vh,32px) clamp(20px,3vw,42px);}
+body[data-view="home"] .dashboard-hero-grid .welcome .hero-proofs,
+body[data-view="home"] .dashboard-hero-grid .welcome > .primary-button {display:none!important;}
+body[data-view="home"] .dashboard-hero-grid .welcome h1.home-ayah-heading {font-size:clamp(25px,3vw,42px);margin:0 0 10px;}
+body[data-view="home"] .home-daily-ayah {width:min(720px,76%);box-sizing:border-box;}
+body[data-view="home"] .dashboard-utility-grid {display:grid;grid-template-columns:1.35fr 1fr 1fr;gap:12px;margin-top:12px;}
+body[data-view="home"] .dashboard-utility-grid > * {min-width:0;min-height:clamp(145px,22vh,190px);box-sizing:border-box;}
+body[data-view="home"] .dashboard-quick-actions {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px;}
+body[data-view="home"] .dashboard-action-card {min-width:0;min-height:54px;padding:10px 12px;box-sizing:border-box;}
+body[data-view="home"] .dashboard-action-card small {display:none;}
+body:not([data-view="home"]) .container {height:calc(100dvh - 118px);max-height:calc(100dvh - 118px);min-height:0;overflow:hidden;padding-top:10px;padding-bottom:12px;}
+body:not([data-view="home"]) .app-section {height:100%;max-height:100%;box-sizing:border-box;overflow-y:auto;overscroll-behavior:contain;}
+/* Keep the symbolic background behind all pages, not over content. */
+.site-atmosphere {z-index:-1!important;}
+/* Opening animation: a stylised illuminated book descends through a beam of light. */
+body.revelation-playing {overflow:hidden!important;}
+.revelation-scene {
+ position:fixed;inset:0;z-index:20000;display:grid;place-items:center;overflow:hidden;
+ isolation:isolate;color:#f7ead0;
+ background:radial-gradient(ellipse at 50% 76%,rgba(196,145,78,.22),transparent 44%),
+ radial-gradient(ellipse at 15% 30%,rgba(45,111,112,.22),transparent 42%),
+ linear-gradient(180deg,#030a14 0%,#091827 48%,#192a31 78%,#050c13 100%);
+ opacity:1;transition:opacity .8s ease,visibility .8s ease;
+}
+.revelation-sky {position:absolute;inset:0;overflow:hidden;}
+.revelation-star {position:absolute;width:3px;height:3px;border-radius:50%;background:#f6e1b7;box-shadow:0 0 14px 4px rgba(247,215,159,.55);animation:revelationTwinkle 2.8s ease-in-out infinite alternate;}
+.rs-one{left:17%;top:20%;}.rs-two{right:19%;top:17%;animation-delay:.9s;}.rs-three{left:75%;top:39%;animation-delay:1.5s;}
+.revelation-beam {position:absolute;left:50%;top:-12%;width:min(52vw,620px);height:112%;transform:translateX(-50%);background:linear-gradient(180deg,rgba(255,229,180,.0),rgba(255,221,160,.12) 52%,rgba(239,186,106,.23));clip-path:polygon(43% 0,57% 0,100% 100%,0 100%);filter:blur(20px);animation:beamPulse 3.8s ease-in-out infinite alternate;}
+.revelation-ground {position:absolute;bottom:-13%;left:-10%;width:120%;height:35%;background:radial-gradient(ellipse at 50% 0%,rgba(229,179,105,.35),transparent 68%);filter:blur(16px);}
+.revelation-book {position:absolute;z-index:2;left:50%;top:-35%;width:clamp(100px,13vw,170px);height:clamp(132px,17vw,215px);transform:translateX(-50%) rotateX(13deg) rotateZ(-4deg);display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;border:2px solid rgba(239,205,135,.9);border-radius:7px 15px 15px 7px;background:linear-gradient(110deg,#a77a3c 0 5%,#173b30 6% 100%);box-shadow:-12px 12px 0 rgba(4,14,19,.55),0 0 40px rgba(238,188,107,.42),inset 0 0 0 5px rgba(226,190,117,.12);color:#f3d69b;animation:bookDescend 5.4s cubic-bezier(.2,.72,.24,1) .25s forwards;}
+.revelation-book::before {content:"";position:absolute;left:8px;top:8px;right:8px;bottom:8px;border:1px solid rgba(236,201,132,.58);border-radius:3px 9px 9px 3px;}
+.book-cover-mark {position:relative;font-size:clamp(18px,2.3vw,28px);}
+.book-cover-title {position:relative;font-family:Georgia,serif;font-size:clamp(12px,1.4vw,17px);letter-spacing:1px;}
+.revelation-mosque {position:absolute;bottom:5%;left:50%;width:min(650px,88vw);height:150px;transform:translateX(-50%);opacity:.34;filter:drop-shadow(0 0 22px rgba(230,177,99,.2));}
+.revelation-mosque::before {content:"";position:absolute;bottom:0;left:10%;right:10%;height:75px;border:1px solid rgba(231,192,126,.5);border-bottom:0;border-radius:45% 45% 0 0;background:linear-gradient(180deg,rgba(190,139,76,.12),rgba(5,16,23,.8));}
+.revelation-mosque::after {content:"";position:absolute;bottom:72px;left:36%;width:28%;height:78px;border:1px solid rgba(231,192,126,.5);border-bottom:0;border-radius:100% 100% 0 0;}
+.revelation-mosque i,.revelation-mosque b,.revelation-mosque em {position:absolute;bottom:0;width:12px;height:132px;border:1px solid rgba(231,192,126,.5);border-bottom:0;}
+.revelation-mosque i{left:12%;}.revelation-mosque b{right:12%;height:145px;}.revelation-mosque em{left:50%;height:108px;}
+.revelation-copy {position:absolute;z-index:4;left:50%;top:54%;transform:translate(-50%,18px);width:min(940px,92vw);text-align:center;padding:18px 20px 44px;opacity:0;animation:revelationTextIn 1.1s 2.2s ease forwards;}
+.revelation-bismillah {display:block;color:#e8cf9e;font-family:Georgia,serif;font-size:clamp(16px,2vw,23px);margin-bottom:12px;}
+.revelation-kicker {display:block;color:#d4b477;font-size:9px;font-weight:700;letter-spacing:3px;margin-bottom:10px;}
+.revelation-verses {color:#f5dfb4;font-family:'Amiri',Georgia,serif;font-size:clamp(18px,2.5vw,29px);line-height:1.65;text-shadow:0 0 25px rgba(230,182,108,.26);}
+.revelation-verses p {margin:0;}
+.revelation-meaning {margin:8px auto 0;max-width:680px;color:#e9e0cf;font-family:Georgia,serif;font-size:clamp(11px,1.25vw,14px);line-height:1.55;}
+.revelation-meaning p {margin:2px 0;}
+.revelation-reference {display:block;margin-top:10px;color:#d1b77f;font-size:10px;letter-spacing:2px;}
+.revelation-footer {position:absolute;z-index:4;bottom:3%;left:0;right:0;text-align:center;color:rgba(233,211,172,.68);font-size:8px;letter-spacing:2px;}
+.revelation-scene.revelation-leaving {opacity:0;visibility:hidden;pointer-events:none;}
+@keyframes bookDescend {0%{top:-35%;transform:translateX(-50%) rotateX(13deg) rotateZ(-4deg);filter:brightness(1.4)}55%{top:20%;transform:translateX(-50%) rotateX(3deg) rotateZ(2deg)}78%{top:13%;transform:translateX(-50%) rotateX(0) rotateZ(-1deg)}100%{top:10%;transform:translateX(-50%) rotateX(0) rotateZ(0);filter:brightness(1)}}
+@keyframes revelationTextIn {to{opacity:1;transform:translate(-50%,0)}from{opacity:0;transform:translate(-50%,18px)}}
+@keyframes revelationTwinkle {from{opacity:.2;transform:scale(.7)}to{opacity:1;transform:scale(1.3)}}
+@keyframes beamPulse {from{opacity:.45}to{opacity:1}}
+@media(max-width:760px) {
+ .site-header,.navbar {width:calc(100% - 20px)!important;max-width:none!important;}
+ .site-header {margin:10px auto 0!important;padding:10px 14px!important;min-height:68px;}
+ .site-header .brand {font-size:24px;}
+ .site-header p {max-width:135px;font-size:9px;line-height:1.4;letter-spacing:.8px;}
+ .navbar {margin:0 auto 8px!important;padding:6px!important;gap:2px;}
+ .navbar a {padding:8px 10px!important;font-size:11px!important;}
+ .container {width:calc(100% - 20px)!important;}
+ body[data-view="home"] .container,body:not([data-view="home"]) .container {height:auto;max-height:none;min-height:calc(100dvh - 100px);overflow:visible;}
+ body[data-view="home"] .dashboard-topbar {grid-template-columns:minmax(0,1fr) auto;gap:7px;}
+ body[data-view="home"] .dashboard-search {grid-column:1/-1;}
+ body[data-view="home"] .dashboard-location,body[data-view="home"] .dashboard-date {min-width:0;max-width:none;}
+ body[data-view="home"] .dashboard-hero-grid .welcome {height:auto;min-height:0;padding:22px 16px;}
+ body[data-view="home"] .home-daily-ayah {width:100%;max-width:100%;}
+ body[data-view="home"] .dashboard-utility-grid {grid-template-columns:1fr 1fr;}
+ body[data-view="home"] .dashboard-prayer-card {grid-column:1/-1;}
+ body[data-view="home"] .dashboard-quick-actions {grid-template-columns:repeat(2,minmax(0,1fr));}
+ body:not([data-view="home"]) .app-section {height:auto;max-height:none;min-height:calc(100dvh - 110px);overflow:visible;}
+ .revelation-copy {top:53%;padding:10px 12px 35px;}
+ .revelation-verses {font-size:clamp(16px,4.4vw,23px);line-height:1.55;}
+ .revelation-meaning {font-size:11px;line-height:1.4;}
+ .revelation-book {width:82px;height:112px;}
+ .revelation-mosque {opacity:.2;}
+}
+@media(max-height:700px) and (min-width:761px) {
+ .revelation-copy {transform:scale(.84);padding-top:0;padding-bottom:24px;}
+ .revelation-footer {bottom:1.5%;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .revelation-book,.revelation-star,.revelation-beam {animation:none!important;}
+ .revelation-book {top:10%;left:50%;transform:translateX(-50%);}
+ .revelation-copy {opacity:1;animation:none!important;}
+}
