@@ -372,3 +372,21 @@ select option{background:#0b211d;color:var(--cream)}
 .navbar a.active .nav-icon{color:var(--gold-bright);opacity:1}
 body:not([data-view="home"]):not([data-view="hadith-library"]) .hadith-sources{display:none}
 @media(max-width:760px){.brand-mark{width:30px;height:30px}.nav-icon{width:15px;height:15px}.navbar a{gap:7px}}
+
+/* Existing data-driven content components */
+.quran-ayah{padding:20px 22px;margin:12px 0;border:1px solid var(--line);border-radius:17px;background:rgba(4,21,23,.7)}
+.quran-ayah>p:not(.quran-arabic){color:#d7ded5;font:14px/1.8 var(--serif)}
+.quran-arabic,.adhkar-arabic,.hadith-arabic{font-family:var(--arabic);color:#f1ddb6;line-height:1.9}
+.quran-ayah .quran-arabic{font-size:clamp(25px,3vw,36px)}
+.quran-ayah .bookmark-btn,.adhkar-actions button,.hadith-actions button{padding:8px 12px;border:1px solid var(--line-strong);border-radius:9px;background:rgba(214,177,105,.1);color:var(--gold-bright);font-size:11px}
+.quran-results>article,.hadith-card,.adhkar-card{transition:border-color .2s,transform .2s}
+.quran-results>article:hover,.hadith-card:hover,.adhkar-card:hover{border-color:var(--line-strong)}
+.hadith-topic{display:inline-flex;padding:4px 8px;border-radius:999px;background:rgba(213,175,103,.1);color:var(--gold);font-size:9px;letter-spacing:1px;text-transform:uppercase}
+.hadith-arabic{font-size:26px;text-align:right}
+.hadith-translation,.adhkar-translation{color:#d9e0d6;font:15px/1.7 var(--serif)}
+.hadith-source{color:var(--muted-2);font-size:10px}
+.hadith-actions{display:flex;gap:8px;margin-top:12px}
+.adhkar-card>p:not(.adhkar-arabic){color:var(--muted);font-size:12px}
+.adhkar-card>a{display:inline-block;margin-top:12px;color:var(--gold);font-size:10px}
+.bookmark-btn:hover,.adhkar-actions button:hover,.hadith-actions button:hover{background:rgba(214,177,105,.18)}
+button:disabled{opacity:.55;cursor:not-allowed}
