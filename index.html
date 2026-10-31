@@ -245,7 +245,21 @@
     </style>
 </head>
 
-<body data-view="home">
+<body data-view="home">\n\n    <!-- CINEMATIC INTRO: a respectful typographic presentation of the first revealed ayah -->
+    <div class="zikr-intro" id="zikr-intro" aria-label="Zikrnoor introduction" aria-hidden="false">
+      <div class="intro-sky" aria-hidden="true"><span class="intro-star star-one"></span><span class="intro-star star-two"></span><span class="intro-star star-three"></span><span class="intro-horizon"></span><span class="intro-mosque"><i></i><b></b><em></em></span></div>
+      <div class="intro-content">
+        <span class="intro-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+        <span class="intro-kicker">THE FIRST REVELATION</span>
+        <div class="intro-ayah" lang="ar" dir="rtl">اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ</div>
+        <p class="intro-translation">“Read in the name of your Lord who created.”</p>
+        <span class="intro-reference">Surah Al-‘Alaq · 96:1</span>
+      </div>
+      <div class="intro-bottom"><span class="intro-line"></span><span>LET THE LIGHT OF KNOWLEDGE BEGIN</span><span class="intro-line"></span></div>
+      <button class="intro-skip" id="intro-skip" type="button">Skip intro <span aria-hidden="true">↗</span></button>
+    </div>
+
+
 
     <!-- Skip link for keyboard users -->
     <a href="#main-content" class="skip-link">Skip to content</a>
@@ -1192,6 +1206,31 @@ window.ZikrnoorLocation = {
  });
  window.addEventListener("hashchange",renderView);
  renderView();
+})();
+</script>
+<script>
+/* Cinematic introduction — session-only, skippable, and reduced-motion aware. */
+(() => {
+  const intro = document.getElementById("zikr-intro");
+  const skip = document.getElementById("intro-skip");
+  if (!intro) return;
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let seen = false;
+  try { seen = sessionStorage.getItem("zikrnoor-intro-seen") === "1"; } catch (_) {}
+  const finish = () => {
+    intro.classList.add("intro-leaving");
+    intro.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("intro-playing");
+    try { sessionStorage.setItem("zikrnoor-intro-seen", "1"); } catch (_) {}
+    window.setTimeout(() => intro.remove(), reduceMotion ? 0 : 1100);
+  };
+  if (seen || reduceMotion) {
+    intro.remove();
+    return;
+  }
+  document.body.classList.add("intro-playing");
+  skip?.addEventListener("click", finish, { once: true });
+  window.setTimeout(finish, 6900);
 })();
 </script>
 </body>
